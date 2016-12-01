@@ -1,0 +1,56 @@
+{
+  "name": "emitty",
+  "version": "1.0.0",
+  "description": "Determine the inheritance of files",
+  "license": "MIT",
+  "repository": "mrmlnc/emitty",
+  "author": {
+    "name": "Denis Malinochkin",
+    "url": "canonium.com"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "main": "out/emitty.js",
+  "typings": "out/emitty.d.ts",
+  "keywords": [
+    "inheritance",
+    "incremental",
+    "building",
+    "compile",
+    "compiling",
+    "dependencies",
+    "performance",
+    "tree",
+    "cache",
+    "pug",
+    "jade",
+    "nunjucks",
+    "posthtml"
+  ],
+  "devDependencies": {
+    "@types/micromatch": "^2.3.29",
+    "@types/mocha": "^2.2.33",
+    "@types/node": "^0.0.2",
+    "@types/through2": "^2.0.32",
+    "@types/vinyl": "^2.0.0",
+    "mocha": "^3.2.0",
+    "rimraf": "^2.5.4",
+    "tslint": "^3.15.1",
+    "typescript": "^2.0.10",
+    "vinyl": "^2.0.1"
+  },
+  "dependencies": {
+    "micromatch": "^2.3.11",
+    "readdir-enhanced": "^1.4.5",
+    "through2": "^2.0.3"
+  },
+  "scripts": {
+    "clean": "rimraf out",
+    "lint": "tslint src/**/*.ts",
+    "compile": "tsc",
+    "test": "mocha out/**/*.spec.js",
+    "build": "npm run clean && npm run lint && npm run compile && npm test",
+    "watch": "npm run clean && npm run lint && npm run compile -- --sourceMap --watch"
+  }
+}

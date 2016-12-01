@@ -1,0 +1,37 @@
+extends layouts/default
+
+include test-0.pug
+
+include test-1.pug
+	include test-2.pug
+include test-3.pug
+
+include test-4
+	include test-5
+		include test-6
+
+.test: include test-7
+
+//- include test-8
+	include test-9
+	// include test-10
+	include test-11
+include test-12
+
+.test
+	include test-13
+	// include test-14
+	include test-15
+	// include test-16
+		include test-17
+include test-18
+
+.test
+	.test
+		// include test-19
+		include test-20
+	include test-21
+
+include script.js
+include style.css
+include:markdown article.md

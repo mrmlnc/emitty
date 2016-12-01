@@ -1,0 +1,53 @@
+extends layouts/default
+
+include test-0.jade
+
+	include test-1
+
+include test-2
+
+.test: include test-3
+
+// include test-4
+	.test
+		include test-5.jade
+
+// extends test-6
+include test-7
+
+//
+	include test-8
+.test
+	include test-9
+
+		include test-10
+
+
+
+include test-11
+
+//-
+include test-12.jade
+
+//-
+	.test
+		include test-13.jade
+
+.test
+	// include test-14
+	.test
+		//
+			include test-15
+
+		//
+			include test-16
+
+		// issue #25
+		include test-17
+
+	//-
+		include test-18
+
+include script.js
+include style.css
+include:markdown article.md

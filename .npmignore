@@ -1,0 +1,14 @@
+# files
+
+.editorconfig
+.gitignore
+.travis.yml
+tsconfig.json
+tslint.json
+
+# directories
+
+fixtures
+out/test
+out/**/*.js.map
+node_modules

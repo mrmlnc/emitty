@@ -1,0 +1,52 @@
+extends(src="layouts/default")
+
+include(src="test-0.sgr")
+
+	include(src="test-1")
+
+include(src="test-2")
+
+.test: include(src="test-3")
+
+// include(src="test-4")
+	.test
+		include(src="test-5.sgr")
+
+// extends(src="test-6")
+include(src="test-7")
+
+//
+	include(src="test-8")
+.test
+	include(src="test-9")
+
+		include(src="test-10")
+
+
+
+include(src="test-11")
+
+//-
+include(src='test-12.sgr')
+
+//-
+	.test
+		include(src='test-13.sgr')
+
+.test
+	// include(src="test-14")
+	.test
+		//
+			include(src='test-15')
+
+		//
+			include(src="test-16")
+
+		include(src='test-17')
+
+	//-
+		include(src="test-18")
+
+include(src="script.js")
+include(src="style.css")
+include(src="article.md")
