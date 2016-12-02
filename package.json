@@ -1,7 +1,7 @@
 {
   "name": "emitty",
   "version": "1.0.0",
-  "description": "Determine the inheritance of files",
+  "description": "Determine the inheritance of template and style files",
   "license": "MIT",
   "repository": "mrmlnc/emitty",
   "author": {
