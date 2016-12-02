@@ -39,10 +39,10 @@ describe('Providers/Stream', () => {
 
 		s.on('end', () => {
 			assert.deepEqual(passedFiles, [
-				'pug/a.pug',
-				'pug/b.pug',
-				'pug/c.pug',
-				'pug/nested/nested.pug'
+				'fixtures/pug/a.pug',
+				'fixtures/pug/b.pug',
+				'fixtures/pug/c.pug',
+				'fixtures/pug/nested/nested.pug'
 			]);
 
 			done();
