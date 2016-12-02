@@ -11,7 +11,6 @@
   "engines": {
     "node": ">=4.0.0"
   },
-  "main": "out/emitty.js",
   "typings": "out/emitty.d.ts",
   "keywords": [
     "inheritance",
