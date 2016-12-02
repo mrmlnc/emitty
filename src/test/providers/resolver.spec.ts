@@ -12,19 +12,19 @@ describe('Providers/Resolver', () => {
 
 	before(() => {
 		storage.load({
-			'a.pug': {
-				dependencies: ['**/*.pug'],
+			'pug/a.pug': {
+				dependencies: ['pug/*.pug'],
 				ctime: new Date()
 			},
-			'b.pug': {
-				dependencies: ['c.pug'],
+			'pug/b.pug': {
+				dependencies: ['pug/nested/c.pug'],
 				ctime: new Date()
 			},
-			'c.pug': {
-				dependencies: ['d.pug'],
+			'pug/nested/c.pug': {
+				dependencies: ['pug/nested/d.pug'],
 				ctime: new Date()
 			},
-			'd.pug': {
+			'pug/nested/d.pug': {
 				dependencies: [],
 				ctime: new Date()
 			}
@@ -32,12 +32,12 @@ describe('Providers/Resolver', () => {
 	});
 
 	it('The list of dependencies for an existing item', () => {
-		assert.deepEqual(resolver.getDependencies('a.pug'), [
-			'a.pug',
-			'**/*.pug',
-			'b.pug',
-			'c.pug',
-			'd.pug'
+		assert.deepEqual(resolver.getDependencies('pug/a.pug'), [
+			'pug/a.pug',
+			'pug/*.pug',
+			'pug/b.pug',
+			'pug/nested/c.pug',
+			'pug/nested/d.pug'
 		]);
 	});
 
@@ -46,8 +46,8 @@ describe('Providers/Resolver', () => {
 	});
 
 	it('Check filepath as dependency', () => {
-		assert.equal(resolver.checkDependency('a.pug', 'c.pug'), true);
-		assert.equal(resolver.checkDependency('a.pug', 'e.pug'), false);
+		assert.equal(resolver.checkDependency('pug/a.pug', 'pug/nested/d.pug'), true);
+		assert.equal(resolver.checkDependency('pug/a.pug', 'pug/e.pug'), false);
 	});
 
 	it('Prevent infinity recursion', () => {
