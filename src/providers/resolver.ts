@@ -21,7 +21,7 @@ export class Resolver {
 			return [];
 		}
 
-		const dependencies = this.traverse(filepath);
+		const dependencies = this.traverse(filepath, 1000);
 		dependencies.unshift(filepath);
 
 		return uniquePrimitiveArray(dependencies);
@@ -35,7 +35,7 @@ export class Resolver {
 		return this.getDependencies(filepath).indexOf(filepathToCheck) !== -1;
 	}
 
-	private traverse(filepath: string, maxIterations = 1000): string[] {
+	private traverse(filepath: string, maxIterations: number): string[] {
 		let dependencies: string[] = this.storage.get(filepath).dependencies;
 
 		// Prevent infinite recursion
