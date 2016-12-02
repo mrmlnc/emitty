@@ -92,7 +92,7 @@ describe('API', () => {
 			done();
 		});
 
-		stream.write({ path: 'fixtures/pug/a.pug' });
+		stream.write({ relative: 'a.pug' });
 
 		stream.end();
 	});

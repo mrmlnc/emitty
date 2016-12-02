@@ -39,20 +39,20 @@ describe('Providers/Stream', () => {
 
 		s.on('end', () => {
 			assert.deepEqual(passedFiles, [
-				'fixtures/pug/a.pug',
-				'fixtures/pug/b.pug',
-				'fixtures/pug/c.pug',
-				'fixtures/pug/nested/nested.pug'
+				'pug/a.pug',
+				'pug/b.pug',
+				'pug/c.pug',
+				'pug/nested/nested.pug'
 			]);
 
 			done();
 		});
 
-		s.write(new Vinyl({ path: 'fixtures/pug/a.pug' }));
-		s.write(new Vinyl({ path: 'fixtures/pug/b.pug' }));
-		s.write(new Vinyl({ path: 'fixtures/pug/c.pug' }));
-		s.write(new Vinyl({ path: 'fixtures/pug/nested/nested.pug' }));
-		s.write(new Vinyl({ path: 'fixtures/pug/parser.pug' }));
+		s.write(new Vinyl({ path: 'pug/a.pug' }));
+		s.write(new Vinyl({ path: 'pug/b.pug' }));
+		s.write(new Vinyl({ path: 'pug/c.pug' }));
+		s.write(new Vinyl({ path: 'pug/nested/nested.pug' }));
+		s.write(new Vinyl({ path: 'pug/parser.pug' }));
 
 		s.end();
 	});
