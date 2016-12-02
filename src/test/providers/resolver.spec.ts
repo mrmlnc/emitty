@@ -17,7 +17,7 @@ describe('Providers/Resolver', () => {
 				ctime: new Date()
 			},
 			'pug/b.pug': {
-				dependencies: ['pug/nested/c.pug'],
+				dependencies: ['pug/nested/c.pug', 'pug/nested/d.pug'],
 				ctime: new Date()
 			},
 			'pug/nested/c.pug': {
@@ -64,7 +64,8 @@ describe('Providers/Resolver', () => {
 
 		assert.deepEqual(resolver.getDependencies('a.pug'), [
 			'a.pug',
-			'b.pug'
+			'b.pug',
+			'a.pug'
 		]);
 	});
 

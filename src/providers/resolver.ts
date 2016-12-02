@@ -4,7 +4,6 @@ import * as micromatch from 'micromatch';
 
 import { Storage } from '../services/storage';
 import { normalize } from '../utils/paths';
-import { uniquePrimitiveArray } from '../utils/arrays';
 
 export class Resolver {
 
@@ -21,10 +20,9 @@ export class Resolver {
 			return [filepath];
 		}
 
-		const dependencies = this.traverse(filepath, 1000);
+		const dependencies = this.traverse(filepath, this.storage.keys(), [], 1000);
 		dependencies.unshift(filepath);
-
-		return uniquePrimitiveArray(dependencies);
+		return dependencies;
 	}
 
 	/**
@@ -35,32 +33,34 @@ export class Resolver {
 		return this.getDependencies(filepath).indexOf(filepathToCheck) !== -1;
 	}
 
-	private traverse(filepath: string, maxIterations: number): string[] {
-		let dependencies: string[] = this.storage.get(filepath).dependencies;
+	private traverse(filepath: string, keys: string[], result: string[], maxIterations: number): string[] {
+		const dependencies = this.storage.get(filepath).dependencies;
 
 		// Prevent infinite recursion
 		maxIterations--;
 
 		for (let i = 0; i < dependencies.length; i++) {
-			const matches = micromatch(this.storage.keys(), dependencies[i]);
+			const dependency = dependencies[i];
+			if (result.indexOf(dependency) === -1) {
+				result.push(dependency);
+			}
 
+			const matches = micromatch(keys, dependency);
 			for (let j = 0; j < matches.length; j++) {
 				const match = matches[j];
 				if (match === filepath) {
 					continue;
 				}
-
-				if (dependencies.indexOf(match) === -1) {
-					dependencies.push(match);
+				if (result.indexOf(match) === -1) {
+					result.push(match);
 				}
-
 				if (this.storage.has(match) && maxIterations > -1) {
-					return dependencies.concat(this.traverse(match, maxIterations));
+					this.traverse(match, keys, result, maxIterations);
 				}
 			}
 		}
 
-		return dependencies;
+		return result;
 	}
 
 }
