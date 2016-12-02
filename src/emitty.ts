@@ -67,6 +67,6 @@ export default function emitty(directory: string, language: string | ILanguage, 
 		load: (snapshot: IStorage) => storage.load(snapshot),
 		scan: (filepath?: string, stat?: fs.Stats) => scanner.scan(filepath, stat),
 		resolver,
-		stream: (filepath: string): stream.Transform => stream.run(filepath)
+		stream: (filepath: string, stat?: fs.Stats): stream.Transform => stream.run(filepath, stat)
 	};
 }

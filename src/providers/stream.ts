@@ -1,5 +1,6 @@
 'use strict';
 
+import * as fs from 'fs';
 import * as through2 from 'through2';
 import * as stream from 'stream';
 
@@ -17,7 +18,7 @@ export class Stream {
 		// :)
 	}
 
-	public run(filepath: string): stream.Transform {
+	public run(filepath: string, stat?: fs.Stats): stream.Transform {
 		const scanner = new Scanner(this.root, this.storage, this.language, this.options);
 		const resolver = new Resolver(this.storage);
 
@@ -33,7 +34,7 @@ export class Stream {
 			filepath = normalize(filepath);
 
 			// Update Storage
-			scanner.scan(filepath).then(() => {
+			scanner.scan(filepath, stat).then(() => {
 				if (resolver.checkDependency(file.path, filepath)) {
 					this.push(file);
 					log(file.path);
