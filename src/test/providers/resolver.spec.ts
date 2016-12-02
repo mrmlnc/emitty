@@ -42,7 +42,7 @@ describe('Providers/Resolver', () => {
 	});
 
 	it('The list of dependencies for a non-existing item', () => {
-		assert.deepEqual(resolver.getDependencies('none.pug'), []);
+		assert.deepEqual(resolver.getDependencies('none.pug'), ['none.pug']);
 	});
 
 	it('Check filepath as dependency', () => {

@@ -18,7 +18,7 @@ export class Resolver {
 	public getDependencies(filepath: string): string[] {
 		filepath = normalize(filepath);
 		if (!this.storage.has(filepath)) {
-			return [];
+			return [filepath];
 		}
 
 		const dependencies = this.traverse(filepath, 1000);
