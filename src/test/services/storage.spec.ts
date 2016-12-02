@@ -41,7 +41,7 @@ describe('Services/Storage', () => {
 	});
 
 	it('Keys', () => {
-		assert.equal(storage.keys().length, 1);
+		assert.deepEqual(storage.keys(), ['b.pug']);
 	});
 
 	it('Storage', () => {
