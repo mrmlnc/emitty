@@ -36,7 +36,7 @@ function assertInput(directory: string, language: string | ILanguage): void {
 	}
 }
 
-export default function emitty(directory: string, language: string | ILanguage, options?: IOptions) {
+export function setup(directory: string, language: string | ILanguage, options?: IOptions) {
 	assertInput(directory, language);
 
 	const storage = new Storage();
