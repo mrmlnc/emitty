@@ -29,9 +29,9 @@ export class Scanner {
 		this.expandGlobPatterns();
 	}
 
-	public scan(filepath?: string, stat?: fs.Stats): Promise<any> {
+	public scan(filepath?: string, stats?: fs.Stats): Promise<any> {
 		if (filepath && this.storage.keys().length !== 0) {
-			return this.scanFile(filepath, stat);
+			return this.scanFile(filepath, stats);
 		}
 
 		return this.scanDirectory();

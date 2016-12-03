@@ -18,7 +18,7 @@ export class Stream {
 		// :)
 	}
 
-	public run(filepath: string, stat?: fs.Stats): stream.Transform {
+	public run(filepath?: string, stats?: fs.Stats): stream.Transform {
 		const scanner = new Scanner(this.root, this.storage, this.language, this.options);
 		const resolver = new Resolver(this.storage);
 
@@ -36,7 +36,7 @@ export class Stream {
 			const changedFile = normalize(filepath);
 
 			// Update Storage
-			scanner.scan(filepath, stat).then(() => {
+			scanner.scan(filepath, stats).then(() => {
 				if (resolver.checkDependency(mainFile, changedFile)) {
 					this.push(file);
 					log(mainFile);

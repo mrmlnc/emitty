@@ -65,8 +65,8 @@ export function setup(directory: string, language: string | ILanguage, options?:
 		storage: () => storage.snapshot(),
 		keys: () => storage.keys(),
 		load: (snapshot: IStorage) => storage.load(snapshot),
-		scan: (filepath?: string, stat?: fs.Stats) => scanner.scan(filepath, stat),
+		scan: (filepath?: string, stats?: fs.Stats) => scanner.scan(filepath, stats),
 		resolver,
-		stream: (filepath: string, stat?: fs.Stats): stream.Transform => stream.run(filepath, stat)
+		stream: (filepath?: string, stats?: fs.Stats): stream.Transform => stream.run(filepath, stats)
 	};
 }
