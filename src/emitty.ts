@@ -12,14 +12,56 @@ import { Stream } from './providers/stream';
 import { pathExistsSync } from './utils/fs';
 
 export interface IScannerOptions {
+	/**
+	 * The maximum number of nested directories to scan.
+	 */
 	depth?: number;
+	/**
+	 * List of Glob-patterns for directories that are excluded when scanning.
+	 */
 	exclude?: string[];
 }
 
 export interface IOptions {
+	/**
+	 * You can load the previous state of the project in the Storage using this option.
+	 */
 	snapshot?: IStorage;
+	/**
+	 * The function that will be called if the file needs to be compiled.
+	 */
 	log?: (filepath: string) => void;
+	/**
+	 * Options for Scanner.
+	 */
 	scanner?: IScannerOptions;
+}
+
+export interface IEmittyApi {
+	/**
+	 * Returns a snapshot of the Storage.
+	 */
+	storage: () => IStorage;
+	/**
+	 * Returns the keys of the Storage.
+	 */
+	keys: () => string[];
+	/**
+	 * Clears the Storage and loads the new data.
+	 */
+	load: (snapshot: IStorage) => void;
+	/**
+	 * Scans directory and updates the Storage.
+	 */
+	scan: (filepath?: string, stats?: fs.Stats) => Promise<void>;
+	/**
+	 * Returns the methods for determining dependencies.
+	 */
+	resolver: Resolver;
+	/**
+	 * Scans directory or file and updates the Storage.
+	 */
+	stream: (filepath?: string, stats?: fs.Stats) => stream.Transform;
 }
 
 function assertInput(directory: string, language: string | ILanguage): void {
@@ -61,7 +103,7 @@ export function setup(directory: string, language: string | ILanguage, options?:
 	const resolver = new Resolver(storage);
 	const stream = new Stream(directory, storage, config.getConfig(), options);
 
-	return {
+	return <IEmittyApi>{
 		storage: () => storage.snapshot(),
 		keys: () => storage.keys(),
 		load: (snapshot: IStorage) => storage.load(snapshot),
