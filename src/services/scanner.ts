@@ -29,7 +29,7 @@ export class Scanner {
 		this.expandGlobPatterns();
 	}
 
-	public scan(filepath?: string, stats?: fs.Stats): Promise<any> {
+	public scan(filepath?: string, stats?: fs.Stats): Promise<void> {
 		if (filepath && this.storage.keys().length !== 0) {
 			return this.scanFile(filepath, stats);
 		}
