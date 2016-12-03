@@ -168,7 +168,7 @@ emitty.scan().then(() => {
 });
 ```
 
-### scan([filepath], [stats]) => TransformStream
+### stream([filepath], [stats]) => TransformStream
 
 Is [scan](#scanfilepath-stats--promise) method, but for Stream and combines `scan` + `resolver`.
 
