@@ -41,7 +41,7 @@ export const builtInConfigs = {
 	sugarml: <ILanguage>{
 		extends: 'pug',
 		extensions: ['.sgr', '.sml'],
-		matcher: /(?:^|:)\s*(?:include|extends)\(src=['"]([^'"]+)['"].*\)/
+		matcher: /(?:^|:)\s*(?:include|extends)\(?src=['"]([^'"]+)['"].*\)/
 	},
 
 	posthtml: <ILanguage>{
