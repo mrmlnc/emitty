@@ -80,7 +80,7 @@ describe('API', () => {
 	});
 
 	it('Stream', (done) => {
-		const api = emitty.setup('fixtures', 'pug', {});
+		const api = emitty.setup('fixtures', 'pug');
 		const stream = api.stream('fixtures/pug/c.pug');
 
 		stream.on('data', () => {
