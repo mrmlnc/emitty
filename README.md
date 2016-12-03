@@ -23,7 +23,9 @@ If you change the `c.pug` file, then will be compiled only it. If you change the
 
 ## Install
 
+```
 $ npm i -D emitty
+```
 
 ## Why?
 
@@ -82,7 +84,7 @@ For more details see [«Options»](#options-1) section.
 ## API
 
 ```js
-const emitty = require('emitty').setup('templates', 'jade');
+const emitty = require('emitty').setup('templates', 'pug');
 ```
 
 ### storage()
@@ -222,14 +224,14 @@ Emitty contains built-in configs for the following instruments:
   * [`pug`](https://pugjs.org)
   * [`nunjucks`](https://mozilla.github.io/nunjucks)
   * [`posthtml`](https://github.com/posthtml/posthtml) — with `posthtml-include` and/or `posthtml-extend` plugin.
-  * [`posthtml-sugarml`](https://github.com/posthtml/sugarml) — with `posthtml-include` and/or `posthtml-extend` plugin.
+  * [`sugarml`](https://github.com/posthtml/sugarml) — with `posthtml-include` and/or `posthtml-extend` plugin.
 
 You can use them when you configure **emitty**:
 
 ```js
 const emitty = require('emitty');
-const emittyJade = emitty.setup('templates', 'jade');
-const emittyPug = emitty.setup('templates', 'pug');
+const emittyJade = emitty.setup('templates', 'pug');
+const emittySugarml = emitty.setup('templates', 'sugarml');
 // ...
 ```
 
