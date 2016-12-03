@@ -29,7 +29,7 @@ $ npm i -D emitty
 
 ## Why?
 
-  * See «What is it? or what is problem?» section.
+  * See [«What is it? or what is problem?»](#what-is-it-or-what-is-problem) section.
   * This solution does not use redundant modules such as Pug parser and Glob.
   * Sufficiently flexible.
 
