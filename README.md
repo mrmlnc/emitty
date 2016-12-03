@@ -170,7 +170,7 @@ emitty.scan().then(() => {
 
 ### scan([filepath], [stats]) => TransformStream
 
-Analog for [scan](#scanfilepath-stats--promise), but for Stream and combines `scan` + `resolver`.
+Is [scan](#scanfilepath-stats--promise) method, but for Stream and combines `scan` + `resolver`.
 
 Scans directory or file and updates the Storage. Then, if file in stream depends on the changed file — pass it further. Else skip it.
 
