@@ -59,7 +59,7 @@ export default function emitty(directory: string, language: string | ILanguage, 
 	const config = new Config(language);
 	const scanner = new Scanner(directory, storage, config.getConfig(), options);
 	const resolver = new Resolver(storage);
-	const stream = new Stream(storage, options, config.getConfig(), directory);
+	const stream = new Stream(directory, storage, config.getConfig(), options);
 
 	return {
 		storage: () => storage.snapshot(),

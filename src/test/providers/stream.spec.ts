@@ -22,7 +22,7 @@ const options = {
 
 const config = new Config('pug');
 const storage = new Storage();
-const stream = new Stream(storage, options, config.getConfig(), 'fixtures');
+const stream = new Stream('fixtures', storage, config.getConfig(), options);
 
 describe('Providers/Stream', () => {
 

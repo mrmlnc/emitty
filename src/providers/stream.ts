@@ -14,7 +14,7 @@ import { normalize, join } from '../utils/paths';
 
 export class Stream {
 
-	constructor(private storage: Storage, private options: IOptions, private language: ILanguage, private root: string) {
+	constructor(private root: string, private storage: Storage, private language: ILanguage, private options: IOptions) {
 		// :)
 	}
 
