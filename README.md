@@ -10,6 +10,8 @@ It degrades performance and increases the time required to compile the code.
 Also, when your project is very large and has a large number of dependencies between blocks (e.g. many mixins) — compiles all files of a project may take seconds or even minutes.
 This is unacceptable if you are working with a "watch" mode.
 
+**Solution?**
+
 This module allows you to compile only those files that depend on the changed file and require compilation.
 
 For example, if you have the following files:
@@ -58,7 +60,7 @@ emitty.scan().then(() => {
 
 ### setup(directory, language, [options])
 
-Creates API for Emitty.
+Creates API for **emitty**.
 
 #### directory
 
@@ -218,7 +220,7 @@ You can load the previous state of the project in the Storage using this option.
 
 ### Built-in configs
 
-Emitty contains built-in configs for the following instruments:
+The **emitty** contains built-in configs for the following instruments:
 
   * `jade` — now it's Pug
   * [`pug`](https://pugjs.org)
@@ -258,7 +260,7 @@ const emitty = require('emitty').setup('templates', {
   * Type: `string`
   * Default: `null`
 
-The name of the built-in config, which will be the basis for this config. If you specify this property, you can specify other properties **as needed**.
+The name of built-in config, which will be basis for this config. If you specify this property, you can specify other properties **as needed**.
 
 #### extensions
 
