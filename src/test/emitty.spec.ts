@@ -106,9 +106,15 @@ describe('API', () => {
 			assert.equal(api.keys().length, 5);
 		}).then(() => {
 			return new Promise((resolve) => {
-				setTimeout(() => {
-					resolve();
-				}, 10);
+				let i = 0;
+				const nextTry = () => {
+					if (api.keys().length !== 0 && i !== 10) {
+						setTimeout(nextTry, 5);
+					} else {
+						resolve();
+					}
+				};
+				nextTry();
 			});
 		}).then(() => {
 			assert.equal(api.keys().length, 0);
