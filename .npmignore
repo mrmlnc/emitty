@@ -11,4 +11,6 @@ tslint.json
 fixtures
 out/test
 out/**/*.js.map
+src
+types
 node_modules
