@@ -108,8 +108,8 @@ describe('API', () => {
 			return new Promise((resolve) => {
 				let i = 0;
 				const nextTry = () => {
-					if (api.keys().length !== 0 && i !== 10) {
-						setTimeout(nextTry, 5);
+					if (api.keys().length !== 0 && i !== 10) { // max 100ms
+						setTimeout(nextTry, 10);
 					} else {
 						resolve();
 					}
