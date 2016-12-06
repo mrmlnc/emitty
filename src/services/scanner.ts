@@ -76,7 +76,8 @@ export class Scanner {
 				const entry = this.makeEntryFile(stat.path, stat.ctime);
 
 				// Return Cache if it exists and not outdated
-				const cached = this.storage.get(entry.filepath);
+				const entryFilePath = relative(process.cwd(), entry.filepath);
+				const cached = this.storage.get(entryFilePath);
 				if (cached && cached.ctime.getTime() >= entry.ctime.getTime()) {
 					listOfPromises.push(cached);
 					return;
