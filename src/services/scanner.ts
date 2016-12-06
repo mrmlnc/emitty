@@ -18,7 +18,7 @@ const reGlobBaseName = /^\*\*\/([\w\.-]+)\/?$/;
 
 export interface IFile {
 	filepath: string;
-	ctime: Date;
+	ctime: number;
 }
 
 export class Scanner {
@@ -78,7 +78,7 @@ export class Scanner {
 				// Return Cache if it exists and not outdated
 				const entryFilePath = relative(process.cwd(), entry.filepath);
 				const cached = this.storage.get(entryFilePath);
-				if (cached && cached.ctime.getTime() >= entry.ctime.getTime()) {
+				if (cached && cached.ctime >= entry.ctime) {
 					listOfPromises.push(cached);
 					return;
 				}
@@ -120,7 +120,7 @@ export class Scanner {
 	private makeEntryFile(filepath: string, ctime: Date): IFile {
 		return {
 			filepath,
-			ctime
+			ctime: ctime.getTime()
 		};
 	}
 

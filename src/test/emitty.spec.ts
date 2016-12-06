@@ -47,11 +47,11 @@ describe('API', () => {
 	const snapshot: IStorage = {
 		'a.pug': {
 			dependencies: ['b.pug'],
-			ctime: new Date()
+			ctime: Date.now()
 		},
 		'b.pug': {
 			dependencies: [],
-			ctime: new Date()
+			ctime: Date.now()
 		}
 	};
 

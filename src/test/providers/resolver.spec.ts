@@ -14,19 +14,19 @@ describe('Providers/Resolver', () => {
 		storage.load({
 			'pug/a.pug': {
 				dependencies: ['pug/*.pug'],
-				ctime: new Date()
+				ctime: Date.now()
 			},
 			'pug/b.pug': {
 				dependencies: ['pug/nested/c.pug', 'pug/nested/d.pug'],
-				ctime: new Date()
+				ctime: Date.now()
 			},
 			'pug/nested/c.pug': {
 				dependencies: ['pug/nested/d.pug'],
-				ctime: new Date()
+				ctime: Date.now()
 			},
 			'pug/nested/d.pug': {
 				dependencies: [],
-				ctime: new Date()
+				ctime: Date.now()
 			}
 		});
 	});
@@ -54,11 +54,11 @@ describe('Providers/Resolver', () => {
 		storage.load({
 			'a.pug': {
 				dependencies: ['b.pug'],
-				ctime: new Date()
+				ctime: Date.now()
 			},
 			'b.pug': {
 				dependencies: ['a.pug'],
-				ctime: new Date()
+				ctime: Date.now()
 			}
 		});
 

@@ -11,7 +11,7 @@ describe('Services/Storage', () => {
 	it('Set/Get', () => {
 		storage.set('a.pug', {
 			dependencies: ['b.pug'],
-			ctime: new Date()
+			ctime: Date.now()
 		});
 
 		assert.equal(storage.get('a.pug').dependencies.length, 1);
@@ -32,7 +32,7 @@ describe('Services/Storage', () => {
 		storage.load({
 			'b.pug': {
 				dependencies: ['c.pug'],
-				ctime: new Date()
+				ctime: Date.now()
 			}
 		});
 

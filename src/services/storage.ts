@@ -2,7 +2,7 @@
 
 export interface IStorageItem {
 	dependencies: string[];
-	ctime: Date;
+	ctime: number;
 }
 
 export interface IStorage {
