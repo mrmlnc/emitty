@@ -12,6 +12,7 @@ export interface IStorage {
 export class Storage {
 
 	private store: IStorage = {};
+	private interval: NodeJS.Timer;
 
 	constructor() {
 		// :)
@@ -45,8 +46,23 @@ export class Storage {
 		return Object.keys(this.store);
 	}
 
-	public snapshot() {
+	public snapshot(): IStorage {
 		return this.store;
+	}
+
+	public startInvalidation(timeInterval: number): void {
+		this.interval = setInterval(() => {
+			const cutoffTime = Date.now() - timeInterval;
+			this.keys().forEach((uri) => {
+				if (this.get(uri).ctime < cutoffTime) {
+					this.drop(uri);
+				}
+			});
+		}, timeInterval);
+	}
+
+	public stopInvalidation(): void {
+		clearInterval(this.interval);
 	}
 
 }

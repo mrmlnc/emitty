@@ -105,15 +105,7 @@ export function setup(directory: string, language: string | ILanguage, options?:
 
 	// Run invalidation
 	if (options.cleanupInterval) {
-		const timeInterval = options.cleanupInterval * 1000;
-		setInterval(() => {
-			const cutoffTime = Date.now() - timeInterval;
-			storage.keys().forEach((uri) => {
-				if (storage.get(uri).ctime < cutoffTime) {
-					storage.drop(uri);
-				}
-			});
-		}, timeInterval);
+		storage.startInvalidation(options.cleanupInterval * 1000);
 	}
 
 	const config = new Config(language);
