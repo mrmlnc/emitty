@@ -1,4 +1,4 @@
-# emitty [WIP]
+# emitty
 
 > Determine the inheritance of template and style files.
 
