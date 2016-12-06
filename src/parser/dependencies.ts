@@ -138,7 +138,7 @@ function regularLanguage(content: string, language: ILanguage): string[] {
 	}
 
 	if (text) {
-		const matches = text.match(new RegExp(language.matcher, 'g')) || [];
+		const matches = text.match(new RegExp(language.matcher.source, 'g')) || [];
 
 		for (let i = 0; i < matches.length; i++) {
 			const keyword = language.matcher.exec(matches[i]);
