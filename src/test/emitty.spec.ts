@@ -99,7 +99,7 @@ describe('API', () => {
 
 	it('Invalidation', () => {
 		const api = emitty.setup('fixtures', 'pug', {
-			cleanupInterval: 0.005 // 5ms
+			cleanupInterval: 0.01 // 10ms
 		});
 
 		return api.scan().then(() => {
@@ -108,8 +108,8 @@ describe('API', () => {
 			return new Promise((resolve) => {
 				let i = 0;
 				const nextTry = () => {
-					if (api.keys().length !== 0 && i !== 25) { // max 250ms
-						setTimeout(nextTry, 10);
+					if (api.keys().length !== 0 && i !== 20) { // max 500ms
+						setTimeout(nextTry, 25);
 					} else {
 						resolve();
 					}
