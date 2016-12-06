@@ -21,7 +21,7 @@ export class Storage {
 		this.store = {};
 
 		Object.keys(snapshot).forEach((uri) => {
-			this.store[uri] = snapshot[uri];
+			this.set(uri, snapshot[uri]);
 		});
 	}
 
