@@ -97,18 +97,21 @@ describe('API', () => {
 		stream.end();
 	});
 
-	it('Invalidation', (done) => {
+	it('Invalidation', () => {
 		const api = emitty.setup('fixtures', 'pug', {
 			cleanupInterval: 0.005 // 5ms
 		});
 
-		api.scan().then(() => {
+		return api.scan().then(() => {
 			assert.equal(api.keys().length, 5);
-
-			setTimeout(() => {
-				assert.equal(api.keys().length, 0);
-				done();
-			}, 20);
+		}).then(() => {
+			return new Promise((resolve) => {
+				setTimeout(() => {
+					resolve();
+				}, 6);
+			});
+		}).then(() => {
+			assert.equal(api.keys().length, 0);
 		});
 	});
 
