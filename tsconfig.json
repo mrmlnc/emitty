@@ -7,7 +7,6 @@
 		"outDir": "out",
 		"forceConsistentCasingInFileNames": true,
 		"pretty": true,
-		"sourceMap": true,
 		"declaration": true
 	}
 }
