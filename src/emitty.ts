@@ -32,6 +32,10 @@ export interface IOptions {
 	 */
 	log?: (filepath: string) => void;
 	/**
+	 * Cleanup interval time in seconds for Storage.
+	 */
+	cleanupInterval?: number;
+	/**
 	 * Options for Scanner.
 	 */
 	scanner?: IScannerOptions;
@@ -85,6 +89,7 @@ export function setup(directory: string, language: string | ILanguage, options?:
 
 	options = Object.assign(<IOptions>{
 		snapshot: {},
+		cleanupInterval: null,
 		log: (filepath: string) => console.log
 	}, options);
 
@@ -96,6 +101,19 @@ export function setup(directory: string, language: string | ILanguage, options?:
 	// Loading data if provided dependency tree
 	if (options.snapshot) {
 		storage.load(options.snapshot);
+	}
+
+	// Run invalidation
+	if (options.cleanupInterval) {
+		const timeInterval = options.cleanupInterval * 1000;
+		setInterval(() => {
+			const cutoffTime = Date.now() - timeInterval;
+			storage.keys().forEach((uri) => {
+				if (storage.get(uri).ctime < cutoffTime) {
+					storage.drop(uri);
+				}
+			});
+		}, timeInterval);
 	}
 
 	const config = new Config(language);

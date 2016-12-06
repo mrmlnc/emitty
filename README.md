@@ -202,6 +202,17 @@ You can load the previous state of the project in the Storage using this option.
 
 **Only for Stream mode**. The function that will be called if the file needs to be compiled.
 
+#### cleanupInterval
+
+  * Type: `number`
+  * Default: `null`
+
+Time interval over which the Storage will be cleared of obsolete items.
+
+> **Tip**
+>
+> Recommended for projects of more than 1000 template files or projects, where often remove the template files (more than once in 10 minutes).
+
 #### scanner.depth
 
   * Type: `number`

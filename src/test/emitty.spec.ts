@@ -97,4 +97,19 @@ describe('API', () => {
 		stream.end();
 	});
 
+	it('Invalidation', (done) => {
+		const api = emitty.setup('fixtures', 'pug', {
+			cleanupInterval: 0.005 // 5ms
+		});
+
+		api.scan().then(() => {
+			assert.equal(api.keys().length, 5);
+
+			setTimeout(() => {
+				assert.equal(api.keys().length, 0);
+				done();
+			}, 20);
+		});
+	});
+
 });
