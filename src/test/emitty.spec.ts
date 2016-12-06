@@ -108,7 +108,7 @@ describe('API', () => {
 			return new Promise((resolve) => {
 				setTimeout(() => {
 					resolve();
-				}, 6);
+				}, 10);
 			});
 		}).then(() => {
 			assert.equal(api.keys().length, 0);
