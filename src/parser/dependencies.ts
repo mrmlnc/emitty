@@ -20,7 +20,7 @@ function indentBasedLanguage(content: string, language: ILanguage): string[] {
 
 	const reCommentStart = new RegExp(language.comments.start);
 	const lineStart = /^(\s*)/;
-	const lines = content.split(/\r?\n/);
+	const lines = content.split('\n');
 
 	let keyword: RegExpExecArray;
 	let comment: RegExpExecArray;
@@ -153,6 +153,7 @@ function regularLanguage(content: string, language: ILanguage): string[] {
 }
 
 export function parseDependencies(content: string, language: ILanguage): string[] {
+	content = content.replace(/\r\n?/g, '\n');
 	if (language.indentBased) {
 		return indentBasedLanguage(content, language);
 	}
