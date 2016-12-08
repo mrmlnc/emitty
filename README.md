@@ -239,7 +239,7 @@ The **emitty** contains built-in configs for the following instruments:
   * [`posthtml`](https://github.com/posthtml/posthtml) — with `posthtml-include` and/or `posthtml-extend` plugin.
   * [`sugarml`](https://github.com/posthtml/sugarml) — with `posthtml-include` and/or `posthtml-extend` plugin.
   * [`less`](http://lesscss.org/)
-  * [`stylus`](http://stylus-lang.com/)
+  * [`stylus`](http://stylus-lang.com/) — indent based syntax
   * [`sass`](http://sass-lang.com/)
   * [`scss`](http://sass-lang.com/)
 
