@@ -29,7 +29,7 @@ export class Scanner {
 		this.expandGlobPatterns();
 	}
 
-	public scan(filepath?: string, stats?: fs.Stats): Promise<void> {
+	public scan(filepath?: string, stats?: fs.Stats): Promise<any> {
 		if (filepath && this.storage.keys().length !== 0) {
 			return this.scanFile(filepath, stats);
 		}
@@ -37,7 +37,7 @@ export class Scanner {
 		return this.scanDirectory();
 	}
 
-	private scanFile(filepath: string, stats: fs.Stats): Promise<void> {
+	private scanFile(filepath: string, stats: fs.Stats): Promise<any> {
 		let statPromise: Promise<fs.Stats>;
 		if (stats) {
 			statPromise = pathExists(filepath).then((exists) => {
@@ -58,7 +58,7 @@ export class Scanner {
 	/**
 	 * Scans directory and saves the dependencies for each file in the Storage.
 	 */
-	private scanDirectory(): Promise<void> {
+	private scanDirectory(): Promise<any> {
 		const listOfPromises = [];
 
 		return new Promise((resolve, reject) => {
@@ -94,7 +94,7 @@ export class Scanner {
 		});
 	}
 
-	private makeDependenciesForDocument(entry: IFile): Promise<void> {
+	private makeDependenciesForDocument(entry: IFile): Promise<any> {
 		// Remove base path
 		const entryFilePath = relative(process.cwd(), entry.filepath);
 		const entryDir = path.dirname(entryFilePath);
