@@ -1,0 +1,15 @@
+@import url("test-0");
+@import "test-1";
+
+@import "test-2";
+
+.nested {
+	@import "test-3.scss";
+}
+
+// @import "test-4.scss";
+@import "test-5.scss";
+
+//
+	@import "test-6.scss";
+@import "test-7";

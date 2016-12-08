@@ -118,4 +118,65 @@ describe('Parser/Dependencies', () => {
 		]);
 	});
 
+	it('Less', () => {
+		const content = fs.readFileSync('./fixtures/less/parser.less').toString();
+		const config = new Config('less');
+		const dependencies = parseDependencies(content, config.getConfig());
+
+		assert.deepEqual(dependencies, [
+			'test-0.less',
+			'test-1.less',
+			'test-3.less',
+			'test-4.less',
+			'test-5.css',
+			'test-6.less'
+		]);
+	});
+
+	it('Stylus', () => {
+		const content = fs.readFileSync('./fixtures/stylus/parser.styl').toString();
+		const config = new Config('stylus');
+		const dependencies = parseDependencies(content, config.getConfig());
+
+		assert.deepEqual(dependencies, [
+			'test-0.styl',
+			'test-1.styl',
+			'test-2.styl',
+			'test-3.styl',
+			'test-5.styl',
+			'test-7.styl'
+		]);
+	});
+
+	it('Sass', () => {
+		const content = fs.readFileSync('./fixtures/sass/parser.sass').toString();
+		const config = new Config('sass');
+		const dependencies = parseDependencies(content, config.getConfig());
+
+		assert.deepEqual(dependencies, [
+			'test-0.sass',
+			'test-1.sass',
+			'test-2.sass',
+			'test-3.sass',
+			'test-5.sass',
+			'test-7.sass'
+		]);
+	});
+
+	it('SCSS', () => {
+		const content = fs.readFileSync('./fixtures/scss/parser.scss').toString();
+		const config = new Config('scss');
+		const dependencies = parseDependencies(content, config.getConfig());
+
+		assert.deepEqual(dependencies, [
+			'test-0.scss',
+			'test-1.scss',
+			'test-2.scss',
+			'test-3.scss',
+			'test-5.scss',
+			'test-6.scss',
+			'test-7.scss'
+		]);
+	});
+
 });

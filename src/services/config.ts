@@ -51,6 +51,36 @@ export const builtInConfigs = {
 			start: '<!--',
 			end: '-->'
 		}
+	},
+
+	less: <ILanguage>{
+		extensions: ['.less'],
+		matcher: /@import.*?['"]([^'"]+)['"]\s*/,
+		comments: {
+			start: '//',
+			end: '\n'
+		}
+	},
+
+	stylus: <ILanguage>{
+		extensions: ['.styl'],
+		matcher: /^\s*@(?:import|require).*?['"]([^'"]+)['"]\s*/,
+		comments: {
+			start: '//',
+			end: '\n'
+		},
+		indentBased: true
+	},
+
+	sass: <ILanguage>{
+		extends: 'less',
+		extensions: ['.sass'],
+		indentBased: true
+	},
+
+	scss: <ILanguage>{
+		extends: 'less',
+		extensions: ['.scss']
 	}
 };
 

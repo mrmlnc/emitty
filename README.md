@@ -238,6 +238,10 @@ The **emitty** contains built-in configs for the following instruments:
   * [`nunjucks`](https://mozilla.github.io/nunjucks)
   * [`posthtml`](https://github.com/posthtml/posthtml) — with `posthtml-include` and/or `posthtml-extend` plugin.
   * [`sugarml`](https://github.com/posthtml/sugarml) — with `posthtml-include` and/or `posthtml-extend` plugin.
+  * [`less`](http://lesscss.org/)
+  * [`stylus`](http://stylus-lang.com/)
+  * [`sass`](http://sass-lang.com/)
+  * [`scss`](http://sass-lang.com/)
 
 You can use them when you configure **emitty**:
 
