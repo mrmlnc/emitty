@@ -178,7 +178,7 @@ Scans directory or file and updates the Storage. Then, if file in stream depends
 
 > **Warning**
 >
-> If you do not specify the path to the file is changed, it will be the last file that has changed since the last scan.
+> If you do not specify the filepath to the changed file, it will be the last file that has changed since the last scan.
 
 ```js
 const stream = emitty.stream();
