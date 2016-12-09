@@ -23,6 +23,7 @@ export interface IFile {
 
 export class Scanner {
 
+	private changedFile: string;
 	private excludePatterns: string[] = [];
 
 	constructor(private root: string, private storage: Storage, private language: ILanguage, private options: IOptions) {
@@ -58,8 +59,11 @@ export class Scanner {
 	/**
 	 * Scans directory and saves the dependencies for each file in the Storage.
 	 */
-	private scanDirectory(): Promise<any> {
+	private scanDirectory(): Promise<string> {
 		const listOfPromises = [];
+
+		// Drop previous changed file
+		this.changedFile = null;
 
 		return new Promise((resolve, reject) => {
 			const stream = readdir.readdirStreamStat(this.root, {
@@ -83,12 +87,13 @@ export class Scanner {
 					return;
 				}
 
+				this.changedFile = entryFilePath;
 				listOfPromises.push(this.makeDependenciesForDocument(entry));
 			});
 
 			stream.on('end', () => {
 				Promise.all(listOfPromises).then(() => {
-					resolve();
+					resolve(this.changedFile);
 				});
 			});
 		});

@@ -26,17 +26,18 @@ export class Stream {
 		const log = this.options.log;
 
 		return through2.obj(function(file, enc, cb) {
-			// Protection for bad filepath
-			if (!filepath) {
-				this.push(file);
-				return cb();
-			}
-
 			const mainFile = join(root, file.relative);
-			const changedFile = normalize(filepath);
 
 			// Update Storage
-			scanner.scan(filepath, stats).then(() => {
+			scanner.scan(filepath, stats).then((lastChangedFile) => {
+				// Protection for bad filepath
+				if (!filepath && !lastChangedFile) {
+					this.push(file);
+					return cb();
+				}
+
+				filepath = filepath ? filepath : lastChangedFile;
+				const changedFile = normalize(filepath);
 				if (resolver.checkDependency(mainFile, changedFile)) {
 					this.push(file);
 					log(mainFile);
