@@ -217,6 +217,13 @@ Time interval over which the Storage will be cleared of obsolete items.
 >
 > Recommended for projects of more than 1000 template files or projects, where often remove the template files (more than once in 10 minutes).
 
+#### makeVinylFile
+
+  * Type: `boolean`
+  * Default: `false`
+
+**Only for Stream mode**. You can use `gulp.src('patterns', { read: false })` to reduce access for filesystem. This option creates a Vinyl file within a Stream.
+
 #### scanner.depth
 
   * Type: `number`

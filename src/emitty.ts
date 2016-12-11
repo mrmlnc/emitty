@@ -39,6 +39,10 @@ export interface IOptions {
 	 * Options for Scanner.
 	 */
 	scanner?: IScannerOptions;
+	/**
+	 * Creates a Vinyl file for the file which should be compiled.
+	 */
+	makeVinylFile?: boolean;
 }
 
 export interface IEmittyApi {
@@ -90,7 +94,8 @@ export function setup(directory: string, language: string | ILanguage, options?:
 	options = Object.assign(<IOptions>{
 		snapshot: {},
 		cleanupInterval: null,
-		log: (filepath: string) => console.log
+		log: (filepath: string) => console.log,
+		vinylFile: false
 	}, options);
 
 	options.scanner = Object.assign(<IScannerOptions>{

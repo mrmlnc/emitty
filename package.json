@@ -43,7 +43,8 @@
   "dependencies": {
     "micromatch": "^2.3.11",
     "readdir-enhanced": "^1.4.5",
-    "through2": "^2.0.3"
+    "through2": "^2.0.3",
+    "vinyl": "^2.0.1"
   },
   "scripts": {
     "clean": "rimraf out",
