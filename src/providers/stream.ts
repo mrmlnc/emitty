@@ -11,7 +11,7 @@ import { ILanguage } from '../services/config';
 import { Scanner } from '../services/scanner';
 import { Resolver } from '../providers/resolver';
 
-import { normalize, join } from '../utils/paths';
+import { normalize, join, relative } from '../utils/paths';
 import { pathExists, statFile, readFile } from '../utils/fs';
 
 export class Stream {
@@ -27,7 +27,14 @@ export class Stream {
 		const _this = this;
 
 		return through2.obj(function(file, enc, cb) {
-			const mainFile = join(_this.root, file.relative);
+			let mainFile = '';
+			if (file.path) {
+				mainFile = relative(file.cwd, file.path);
+			}
+
+			if (!mainFile.startsWith(_this.root)) {
+				mainFile = join(_this.root, mainFile);
+			}
 
 			// Update Storage
 			scanner.scan(filepath, stats).then((lastChangedFile) => {
