@@ -233,7 +233,7 @@ Time interval over which the Storage will be cleared of obsolete items.
 
 #### scanner.exclude
 
-  * Type: `strin[]`
+  * Type: `string[]`
   * Default: `['.git', '**/node_modules', '**/bower_components']`
 
 **This option can affect performance.** List of Glob-patterns for directories that are excluded when scanning.
@@ -309,8 +309,8 @@ Regexp to run on each line of source code to match dependency references.
 
 ```js
 {
-  start: '//', // The start of a comment
-  end: '' // The end of a comment
+  start: '//', // [type: string] The start of a comment
+  end: '' // [type: string] The end of a comment
 }
 ```
 
