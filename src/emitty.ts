@@ -9,6 +9,7 @@ import { Scanner } from './services/scanner';
 import { Resolver } from './providers/resolver';
 import { Stream } from './providers/stream';
 
+import { normalize } from './utils/paths';
 import { pathExistsSync } from './utils/fs';
 
 export interface IScannerOptions {
@@ -86,8 +87,8 @@ function assertInput(directory: string, language: string | ILanguage): void {
 	}
 }
 
-export function setup(directory: string, language: string | ILanguage, options?: IOptions) {
-	assertInput(directory, language);
+export function setup(root: string, language: string | ILanguage, options?: IOptions) {
+	assertInput(root, language);
 
 	const storage = new Storage();
 
@@ -113,10 +114,12 @@ export function setup(directory: string, language: string | ILanguage, options?:
 		storage.startInvalidation(options.cleanupInterval * 1000);
 	}
 
+	root = normalize(root);
+
 	const config = new Config(language);
-	const scanner = new Scanner(directory, storage, config.getConfig(), options);
+	const scanner = new Scanner(root, storage, config.getConfig(), options);
 	const resolver = new Resolver(storage);
-	const stream = new Stream(directory, storage, config.getConfig(), options);
+	const stream = new Stream(root, storage, config.getConfig(), options);
 
 	return <IEmittyApi>{
 		storage: () => storage.snapshot(),
