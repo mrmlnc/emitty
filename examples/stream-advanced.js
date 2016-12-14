@@ -20,9 +20,11 @@ gulp.task('watch', () => {
 		});
 });
 
-gulp.task('templates', () =>
-	gulp.src('app/templates/*.pug', { read: false })
+gulp.task('templates', () => {
+	const sourceOptions = global.watch ? { read: false } : {};
+
+	return gulp.src('app/templates/*.pug', sourceOptions)
 		.pipe(gulpif(global.watch, emitty.stream(global.emittyChangedFile.path, global.emittyChangedFile.stats)))
 		.pipe(pug({ pretty: true }))
 		.pipe(gulp.dest('build'))
-);
+});

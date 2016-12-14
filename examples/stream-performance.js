@@ -1,8 +1,8 @@
 // npm i gulpjs/gulp#4.0 gulp-if gulp-pug emitty
 const gulp = require('gulp');
 const gulpif = require('gulp-if');
-const emitty = require('emitty').setup('app/templates', 'pug');
 const pug = require('gulp-pug');
+const emitty = require('emitty').setup('app/templates', 'pug');
 
 // Your "watch" task
 gulp.task('watch', () => {
