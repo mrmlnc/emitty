@@ -331,6 +331,7 @@ The syntax of the language is based on indentation?
   * [Basic](https://github.com/mrmlnc/emitty/blob/master/examples/stream-basic.js)
   * [Advanced](https://github.com/mrmlnc/emitty/blob/master/examples/stream-advanced.js)
   * [Performance](https://github.com/mrmlnc/emitty/blob/master/examples/stream-performance.js) (recommended)
+  * [Ninja](https://github.com/mrmlnc/emitty/blob/master/examples/stream-ninja.js)
 
 ## Changelog
 
