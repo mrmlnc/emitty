@@ -1,5 +1,6 @@
 'use strict';
 
+import * as path from 'path';
 import * as fs from 'fs';
 import * as through2 from 'through2';
 import * as stream from 'stream';
@@ -11,7 +12,7 @@ import { ILanguage } from '../services/config';
 import { Scanner } from '../services/scanner';
 import { Resolver } from '../providers/resolver';
 
-import { normalize, join, relative } from '../utils/paths';
+import { normalize } from '../utils/paths';
 import { pathExists, statFile, readFile } from '../utils/fs';
 
 export class Stream {
@@ -100,14 +101,14 @@ export class Stream {
 	private makeMainFilePath(root: string, file: Vinyl) {
 		let filepath = '';
 		if (file.path) {
-			filepath = relative(file.cwd, file.path);
+			filepath = path.relative(file.cwd, file.path);
 		}
 
 		if (!filepath.startsWith(root)) {
-			filepath = join(root, filepath);
+			filepath = path.join(root, filepath);
 		}
 
-		return filepath;
+		return normalize(filepath);
 	}
 
 	/**
@@ -122,10 +123,11 @@ export class Stream {
 		const stat = await statFile(filepath);
 		const content = await readFile(filepath);
 
+		const fullpath = path.join(process.cwd(), filepath);
+
 		return new Vinyl({
-			cwd: process.cwd(),
-			base: this.root,
-			path: filepath,
+			base: path.dirname(fullpath),
+			path: fullpath,
 			contents: new Buffer(content),
 			stat
 		});
