@@ -31,6 +31,12 @@ export class Stream {
 	public run(filepath?: string, stats?: fs.Stats): stream.Transform {
 		const _this = this;
 
+		// Protection against undefined
+		if (typeof filepath !== 'string' || typeof stats !== 'object') {
+			filepath = null;
+			stats = null;
+		}
+
 		return through2.obj(function(file, enc, cb) {
 			let mainFile = _this.makeMainFilePath(_this.root, file);
 
