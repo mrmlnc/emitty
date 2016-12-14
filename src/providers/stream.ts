@@ -32,7 +32,7 @@ export class Stream {
 		const _this = this;
 
 		// Protection against undefined
-		if (typeof filepath !== 'string' || typeof stats !== 'object') {
+		if (typeof filepath !== 'string') {
 			filepath = null;
 			stats = null;
 		}
