@@ -9,6 +9,7 @@ tslint.json
 # directories
 
 fixtures
+examples
 out/test
 out/**/*.js.map
 src
