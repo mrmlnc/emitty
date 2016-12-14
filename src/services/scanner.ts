@@ -13,9 +13,6 @@ import { IOptions } from '../emitty';
 import { relative, join } from '../utils/paths';
 import { pathExists, statFile, readFile } from '../utils/fs';
 
-// RegExp's
-const reGlobBaseName = /^\*\*\/([\w\.-]+)\/?$/;
-
 export interface IFile {
 	filepath: string;
 	ctime: number;
@@ -27,7 +24,7 @@ export class Scanner {
 	private excludePatterns: string[] = [];
 
 	constructor(private root: string, private storage: Storage, private language: ILanguage, private options: IOptions) {
-		this.expandGlobPatterns();
+		this.excludePatterns = this.options.scanner.exclude;
 	}
 
 	public scan(filepath?: string, stats?: fs.Stats): Promise<any> {
@@ -136,19 +133,6 @@ export class Scanner {
 			return this.language.extensions.indexOf(path.extname(stat.path)) !== -1;
 		}
 		return true;
-	}
-
-	private expandGlobPatterns() {
-		this.excludePatterns = this.options.scanner.exclude;
-
-		// Expand **/name to  **/name + **/name/**
-		if (this.options.scanner.exclude) {
-			this.options.scanner.exclude.forEach((pattern) => {
-				if (reGlobBaseName.test(pattern)) {
-					this.excludePatterns.push(pattern + '/**');
-				}
-			});
-		}
 	}
 
 }

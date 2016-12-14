@@ -9,7 +9,7 @@ import { Scanner } from './services/scanner';
 import { Resolver } from './providers/resolver';
 import { Stream } from './providers/stream';
 
-import { normalize } from './utils/paths';
+import { normalize, expandGlobPatterns } from './utils/paths';
 import { pathExistsSync } from './utils/fs';
 
 export interface IScannerOptions {
@@ -112,6 +112,11 @@ export function setup(root: string, language: string | ILanguage, options?: IOpt
 	// Run invalidation
 	if (options.cleanupInterval) {
 		storage.startInvalidation(options.cleanupInterval * 1000);
+	}
+
+	// Expanding of Glob-patterns that should be excluded during scanning
+	if (options.scanner.exclude) {
+		options.scanner.exclude = expandGlobPatterns(options.scanner.exclude);
 	}
 
 	root = normalize(root);
