@@ -15,7 +15,9 @@ describe('Utils/Paths', () => {
 	});
 
 	it('relative', () => {
-		assert.equal(relative('a', 'a\\b\\c.txt'), 'b/c.txt');
+		const cwd = process.cwd();
+		const filepath = join(cwd, 'c.txt');
+		assert.equal(relative(cwd, filepath), 'c.txt');
 	});
 
 	it('expandGlobPatterns', () => {
