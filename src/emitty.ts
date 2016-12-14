@@ -132,6 +132,7 @@ export function setup(root: string, language: string | ILanguage, options?: IOpt
 		load: (snapshot: IStorage) => storage.load(snapshot),
 		scan: (filepath?: string, stats?: fs.Stats) => scanner.scan(filepath, stats),
 		resolver,
-		stream: (filepath?: string, stats?: fs.Stats): stream.Transform => stream.run(filepath, stats)
+		stream: (filepath?: string, stats?: fs.Stats): stream.Transform => stream.run(filepath, stats),
+		filter: (filepath: string): stream.Transform => stream.filter(filepath)
 	};
 }

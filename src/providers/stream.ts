@@ -16,55 +16,103 @@ import { pathExists, statFile, readFile } from '../utils/fs';
 
 export class Stream {
 
+	private scanner;
+	private resolver;
+
 	constructor(private root: string, private storage: Storage, private language: ILanguage, private options: IOptions) {
-		// :)
+		this.scanner = new Scanner(root, storage, language, options);
+		this.resolver = new Resolver(storage);
 	}
 
+	/**
+	 * Starts scanning the directory and push Vinyl file to a Stream if it is required.
+	 */
 	public run(filepath?: string, stats?: fs.Stats): stream.Transform {
-		const scanner = new Scanner(this.root, this.storage, this.language, this.options);
-		const resolver = new Resolver(this.storage);
-
 		const _this = this;
 
 		return through2.obj(function(file, enc, cb) {
-			let mainFile = '';
-			if (file.path) {
-				mainFile = relative(file.cwd, file.path);
-			}
-
-			if (!mainFile.startsWith(_this.root)) {
-				mainFile = join(_this.root, mainFile);
-			}
+			let mainFile = _this.makeMainFilePath(_this.root, file);
 
 			// Update Storage
-			scanner.scan(filepath, stats).then((lastChangedFile) => {
-				// Protection for bad filepath
+			_this.scanner.scan(filepath, stats).then((lastChangedFile) => {
+				// Protection against bad paths
 				if (!filepath && !lastChangedFile) {
-					this.push(file);
+					_this.pushFile(this, file, mainFile);
 					return cb();
 				}
 
 				filepath = filepath ? filepath : lastChangedFile;
-				const changedFile = normalize(filepath);
-				if (resolver.checkDependency(mainFile, changedFile)) {
-					if (_this.options.makeVinylFile) {
-						return _this.makeVinylFile(mainFile).then((vFile) => {
-							this.push(vFile);
-							_this.options.log(mainFile);
-							return cb();
-						});
-					}
-
-					this.push(file);
-					_this.options.log(mainFile);
-					return cb();
-				}
-
-				cb();
+				_this.filterFileByDependencies(filepath, mainFile, this, file, cb);
 			}).catch(cb);
 		});
 	}
 
+	/**
+	 * Push Vinyl file to a Stream if it is required.
+	 */
+	public filter(filepath: string): stream.Transform {
+		const _this = this;
+
+		return through2.obj(function(file, enc, cb) {
+			let mainFile = _this.makeMainFilePath(_this.root, file);
+
+			// Protection against bad paths
+			if (!filepath) {
+				_this.pushFile(this, file, mainFile);
+				return cb();
+			}
+
+			_this.filterFileByDependencies(filepath, mainFile, this, file, cb);
+		});
+	}
+
+	/**
+	 * Determines whether to send the Vinyl file to a Stream.
+	 */
+	private filterFileByDependencies(filepath: string, mainFile: string, streamCtx: any, file: Vinyl, cb: Function) {
+		const changedFile = normalize(filepath);
+		if (this.resolver.checkDependency(mainFile, changedFile)) {
+			if (this.options.makeVinylFile) {
+				return this.makeVinylFile(mainFile).then((vFile) => {
+					this.pushFile(streamCtx, vFile, mainFile);
+					return cb();
+				});
+			}
+
+			this.pushFile(streamCtx, file, mainFile);
+			return cb();
+		}
+
+		return cb();
+	}
+
+	/**
+	 * Push Vinyl file to a Stream.
+	 */
+	private pushFile(ctx: any, file: Vinyl, filepath: string) {
+		ctx.push(file);
+		this.options.log(filepath);
+	}
+
+	/**
+	 * Calculates relative path of the Vinyl file in Stream.
+	 */
+	private makeMainFilePath(root: string, file: Vinyl) {
+		let filepath = '';
+		if (file.path) {
+			filepath = relative(file.cwd, file.path);
+		}
+
+		if (!filepath.startsWith(root)) {
+			filepath = join(root, filepath);
+		}
+
+		return filepath;
+	}
+
+	/**
+	 * Creates Vinyl File for filepath.
+	 */
 	private async makeVinylFile(filepath: string): Promise<any> {
 		const exists = await pathExists(filepath);
 		if (!exists) {

@@ -190,6 +190,10 @@ stream.on('end', () => {
 stream.end();
 ```
 
+## filter(filepath) => TransformStream
+
+Passes continue to stream only those files that need to be compiled.
+
 ## Options
 
 #### snapshot
