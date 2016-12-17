@@ -65,8 +65,8 @@ Creates API for **emitty**.
 | Parameter   | Type                 | Default | Required | Description |
 |:-----------:|:--------------------:|:-------:|:--------:|:------------|
 | `directory` | `String`             | `null`  | +        | Directory to start from. |
-| `language`  | `String` or `Object` | `null`  | +        | The settings for the language that you want to use. For more details see [«Language»](#language-1) section. |
-| `[options]` | `Object`             | `{}`    | -        | For more details see [«Options»](#options-1) section. |
+| `language`  | `String` or `Object` | `null`  | +        | The settings for the language that you want to use. For more details see [«Language»](#language) section. |
+| `[options]` | `Object`             | `{}`    | -        | For more details see [«Options»](#options) section. |
 
 ## API
 
