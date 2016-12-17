@@ -62,26 +62,11 @@ emitty.scan().then(() => {
 
 Creates API for **emitty**.
 
-#### directory
-
-  * Type: `string`
-  * Default: `null`
-
-Directory to start from.
-
-#### language
-
-  * Type: `string` or `object`
-  * Default: `null`
-
-The settings for the language that you want to use. For more details see [«Language»](#language-1) section.
-
-#### options
-
-  * Type: `object`
-  * Default: `{}`
-
-For more details see [«Options»](#options-1) section.
+| Parameter   | Type                 | Default | Required | Description |
+|:-----------:|:--------------------:|:-------:|:--------:|:------------|
+| `directory` | `String`             | `null`  | +        | Directory to start from. |
+| `language`  | `String` or `Object` | `null`  | +        | The settings for the language that you want to use. For more details see [«Language»](#language-1) section. |
+| `[options]` | `Object`             | `{}`    | -        | For more details see [«Options»](#options-1) section. |
 
 ## API
 
@@ -196,51 +181,14 @@ Passes continue to stream only those files that need to be compiled.
 
 ## Options
 
-#### snapshot
-
-  * Type: `object`
-  * Default: `{}`
-
-You can load the previous state of the project in the Storage using this option.
-
-#### log
-
-  * Type `function`
-  * Default: `(filepath) => console.log`
-
-**Only for Stream mode**. The function that will be called if the file needs to be compiled.
-
-#### cleanupInterval
-
-  * Type: `number`
-  * Default: `null`
-
-Time interval over which the Storage will be cleared of obsolete items.
-
-> **Tip**
->
-> Recommended for projects of more than 1000 template files or projects, where often remove the template files (more than once in 10 minutes).
-
-#### makeVinylFile
-
-  * Type: `boolean`
-  * Default: `false`
-
-**Only for Stream mode**. You can use `gulp.src('patterns', { read: false })` to reduce access for filesystem. This option creates a Vinyl file within a Stream.
-
-#### scanner.depth
-
-  * Type: `number`
-  * Default: `30`
-
-**This option can affect performance.** The maximum number of nested directories to scan.
-
-#### scanner.exclude
-
-  * Type: `string[]`
-  * Default: `['.git', '**/node_modules', '**/bower_components']`
-
-**This option can affect performance.** List of Glob-patterns for directories that are excluded when scanning.
+| Option            | Type       | Default                                              | For Stream | Description |
+|:-----------------:|:----------:|:----------------------------------------------------:|:----------:|:------------|
+| `snapshot`        | `Object`   | `{}`                                                 | -          | You can load the previous state of the project in the Storage using this option. |
+| `log`             | `Function` | `console.log`                                        | +          | The function that will be called if the file needs to be compiled. |
+| `cleanupInterval` | `Number`   | `null`                                               | -          | Time interval over which the Storage will be cleared of obsolete items. Recommended for projects very big projects. |
+| `makeVinylFile`   | `Boolean`  | `false`                                              | +          | You can use `gulp.src('patterns', { read: false })` to reduce access for filesystem. This option creates a Vinyl file within a Stream. |
+| `scanner.depth`   | `Number`   | `30`                                                 | -          | The maximum number of nested directories to scan. |
+| `scanner.exclude` | `String[]` | `['.git', '**/node_modules', '**/bower_components']` | -          | List of Glob-patterns for directories that are excluded when scanning. |
 
 ## Language
 
@@ -285,45 +233,14 @@ const emitty = require('emitty').setup('templates', {
 });
 ```
 
-#### [extends]
-
-  * Type: `string`
-  * Default: `null`
-
-The name of built-in config, which will be basis for this config. If you specify this property, you can specify other properties **as needed**.
-
-#### extensions
-
-  * Type: `string[]`
-  * Default: `null`
-
-List of file extensions to be included in Storage when scanning.
-
-#### matcher
-
-  * Type: `RegExp`
-  * Default: `null`
-
-Regexp to run on each line of source code to match dependency references.
-
-#### comments
-
-  * Type: `object`
-  * Default: `null`
-
-```js
-{
-  start: '//', // [type: string] The start of a comment
-  end: '' // [type: string] The end of a comment
-}
-```
-
-#### [indentBased]
-
-  * Type: `boolean`
-  * Default: `false`
-
-The syntax of the language is based on indentation?
+| Property         | Type       | Default | Required | Description |
+|:----------------:|:----------:|:-------:|:--------:|:------------|
+| `[extends]`      | `String`   | `null`  | -        | The name of built-in config, which will be basis for this config. If you specify this property, you can specify other properties **as needed**. |
+| `extensions`     | `String[]` | `null`  | +        | List of file extensions to be included in Storage when scanning. |
+| `matcher`        | `RegExp`   | `null`  | +        | Regexp to run on each line of source code to match dependency references. |
+| `comments.start` | `String`   | `null`  | +        | The start of a comment. |
+| `comments.end`   | `String`   | `null`  | +        | The end of a comment. |
+| `[indentBased]`  | `Boolean`  | `false` | -        | The syntax of the language is based on indentation? |
 
 ## How to use with Gulp
 
