@@ -17,7 +17,7 @@ gulp.task('watch', () => {
 
 gulp.task('templates', () =>
 	new Promise((resolve, reject) => {
-		emitty.scan(global.changedStyleFile).then(() => {
+		emitty.scan(global.emittyChangedFile).then(() => {
 			gulp.src('app/templates/*.pug')
 				.pipe(gulpif(global.watch, emitty.filter(global.emittyChangedFile)))
 				.pipe(pug({ pretty: true }))
