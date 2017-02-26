@@ -62,7 +62,7 @@ export class Scanner {
 		// Drop previous changed file
 		this.changedFile = null;
 
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve) => {
 			const stream = readdir.readdirStreamStat(this.root, {
 				basePath: path.resolve(this.root),
 				filter: (stat) => this.scannerFilter(stat),

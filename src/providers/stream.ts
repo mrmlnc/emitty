@@ -21,15 +21,15 @@ export class Stream {
 	private resolver;
 
 	constructor(private root: string, private storage: Storage, private language: ILanguage, private options: IOptions) {
-		this.scanner = new Scanner(root, storage, language, options);
-		this.resolver = new Resolver(storage);
+		this.scanner = new Scanner(this.root, this.storage, this.language, this.options);
+		this.resolver = new Resolver(this.storage);
 	}
 
 	/**
 	 * Starts scanning the directory and push Vinyl file to a Stream if it is required.
 	 */
 	public run(filepath?: string, stats?: fs.Stats): stream.Transform {
-		const _this = this;
+		const self = this;
 
 		// Protection against undefined
 		if (typeof filepath !== 'string') {
@@ -37,19 +37,19 @@ export class Stream {
 			stats = null;
 		}
 
-		return through2.obj(function(file, enc, cb) {
-			let mainFile = _this.makeMainFilePath(_this.root, file);
+		return through2.obj(function(file, _enc, cb) {
+			const mainFile = self.makeMainFilePath(self.root, file);
 
 			// Update Storage
-			_this.scanner.scan(filepath, stats).then((lastChangedFile) => {
+			self.scanner.scan(filepath, stats).then((lastChangedFile) => {
 				// Protection against bad paths
 				if (!filepath && !lastChangedFile) {
-					_this.pushFile(this, file, mainFile);
+					self.pushFile(this, file, mainFile);
 					return cb();
 				}
 
 				filepath = filepath ? filepath : lastChangedFile;
-				_this.filterFileByDependencies(filepath, mainFile, this, file, cb);
+				self.filterFileByDependencies(filepath, mainFile, this, file, cb);
 			}).catch(cb);
 		});
 	}
@@ -58,18 +58,18 @@ export class Stream {
 	 * Push Vinyl file to a Stream if it is required.
 	 */
 	public filter(filepath: string): stream.Transform {
-		const _this = this;
+		const self = this;
 
-		return through2.obj(function(file, enc, cb) {
-			let mainFile = _this.makeMainFilePath(_this.root, file);
+		return through2.obj(function(file, _enc, cb) {
+			const mainFile = self.makeMainFilePath(self.root, file);
 
 			// Protection against bad paths
 			if (!filepath) {
-				_this.pushFile(this, file, mainFile);
+				self.pushFile(this, file, mainFile);
 				return cb();
 			}
 
-			_this.filterFileByDependencies(filepath, mainFile, this, file, cb);
+			self.filterFileByDependencies(filepath, mainFile, this, file, cb);
 		});
 	}
 

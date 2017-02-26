@@ -6,18 +6,19 @@ import { Config, builtInConfigs } from '../../services/config';
 
 describe('Services/Config', () => {
 
+	let config;
+
 	it('Error by non-exists language', () => {
 		try {
-			new Config('none');
+			config = new Config('none');
 		} catch (err) {
 			assert.equal(err, 'Error: the configuration "none" clound not found');
 		}
 	});
 
-
 	it('Error by language without extensions and extends', () => {
 		try {
-			new Config({});
+			config = new Config({});
 		} catch (err) {
 			assert.equal(err, 'TypeError: the "extensions" field must be an Array of strings');
 		}
@@ -25,7 +26,7 @@ describe('Services/Config', () => {
 
 	it('Error by language with broken extensions', () => {
 		try {
-			new Config({ extensions: <any>1 });
+			config = new Config({ extensions: <any>1 });
 		} catch (err) {
 			assert.equal(err, 'TypeError: the "extensions" field must be an Array of strings');
 		}
@@ -33,7 +34,7 @@ describe('Services/Config', () => {
 
 	it('Error by language with extensions, but without matcher', () => {
 		try {
-			new Config({ extensions: ['.pug'] });
+			config = new Config({ extensions: ['.pug'] });
 		} catch (err) {
 			assert.equal(err, 'TypeError: the "matcher" field must be a RegExp');
 		}
@@ -41,7 +42,7 @@ describe('Services/Config', () => {
 
 	it('Error by language with broken matcher', () => {
 		try {
-			new Config({ extensions: ['.pug'], matcher: <any>1 });
+			config = new Config({ extensions: ['.pug'], matcher: <any>1 });
 		} catch (err) {
 			assert.equal(err, 'TypeError: the "matcher" field must be a RegExp');
 		}
@@ -49,14 +50,14 @@ describe('Services/Config', () => {
 
 	it('Error by language with non-exists extends', () => {
 		try {
-			new Config({ extends: 'nope' });
+			config = new Config({ extends: 'nope' });
 		} catch (err) {
 			assert.equal(err, 'Error: the configuration "nope" clound not found');
 		}
 	});
 
 	it('Built-in language config', () => {
-		const config = new Config('jade').getConfig();
+		config = new Config('jade').getConfig();
 		assert.deepEqual(config, builtInConfigs.jade);
 	});
 
@@ -70,10 +71,9 @@ describe('Services/Config', () => {
 			}
 		};
 
-		const config = new Config(customConfig).getConfig();
+		config = new Config(customConfig).getConfig();
 		assert.deepEqual(config, customConfig);
 	});
-
 
 	it('Custom language config with extends', () => {
 		const customConfig = {
@@ -82,7 +82,7 @@ describe('Services/Config', () => {
 			matcher: /hello/
 		};
 
-		const config = new Config(customConfig).getConfig();
+		config = new Config(customConfig).getConfig();
 		assert.deepEqual(config, {
 			extensions: ['.hello'],
 			matcher: /hello/,

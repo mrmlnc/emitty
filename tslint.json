@@ -26,6 +26,11 @@
 				"property-declaration": "nospace",
 				"variable-declaration": "nospace"
 			}
+		],
+		"variable-name": [
+			true,
+			"check-format",
+			"allow-leading-underscore"
 		]
 	}
 }

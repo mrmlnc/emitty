@@ -72,7 +72,7 @@ describe('Parser/Dependencies', () => {
 			'test-3.njk',
 			'test-4.njk',
 			'test-7.njk',
-			'test-9.njk',
+			'test-9.njk'
 		]);
 	});
 

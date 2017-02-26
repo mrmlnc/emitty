@@ -32,7 +32,7 @@ function indentBasedLanguage(content: string, language: ILanguage): string[] {
 			// Skip lines without comment substring
 			comment = reCommentStart.exec(line);
 
-			// indent === -1 - because Jade & Pug supports nested comments
+			// Indent === -1 - because Jade & Pug supports nested comments
 			if (indent === -1 && comment) {
 				indent = comment.index;
 				continue;

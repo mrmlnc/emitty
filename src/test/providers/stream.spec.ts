@@ -33,7 +33,7 @@ describe('Providers/Stream', () => {
 		const stream = new Stream('fixtures', storage, config.getConfig(), options);
 		const s = stream.run('fixtures/pug/c.pug');
 
-		s.on('data', (file: Vinyl) => {
+		s.on('data', () => {
 			// Because Stream
 		});
 
@@ -101,7 +101,7 @@ describe('Providers/Stream', () => {
 		const stream = new Stream('fixtures', storage, config.getConfig(), options);
 		const s = stream.filter('fixtures/pug/parser.pug');
 
-		s.on('data', (file: Vinyl) => {
+		s.on('data', () => {
 			// Because Stream
 		});
 

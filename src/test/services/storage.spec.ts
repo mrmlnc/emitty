@@ -4,7 +4,7 @@ import * as assert from 'assert';
 
 import { Storage } from '../../services/storage';
 
-let storage = new Storage();
+const storage = new Storage();
 
 describe('Services/Storage', () => {
 

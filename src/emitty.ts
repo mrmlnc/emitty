@@ -95,7 +95,7 @@ export function setup(root: string, language: string | ILanguage, options?: IOpt
 	options = Object.assign(<IOptions>{
 		snapshot: {},
 		cleanupInterval: null,
-		log: (filepath: string) => console.log,
+		log: () => console.log,
 		vinylFile: false
 	}, options);
 
