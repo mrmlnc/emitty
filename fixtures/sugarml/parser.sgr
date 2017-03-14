@@ -47,6 +47,7 @@ include(src='test-12.sgr')
 	//-
 		include(src="test-18")
 
+link(href='https://fonts.googleapis.com/css?family=Work+Sans' rel='stylesheet' type='text/css')
 include(src="script.js")
 include(src="style.css")
 include(src="article.md")

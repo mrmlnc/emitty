@@ -12,6 +12,13 @@ function normalizeExtension(filepath: string, extensions: string[]): string {
 	return filepath;
 }
 
+function isCommentLine(line: string, re: RegExpExecArray): boolean {
+	const textBeforeComment = line.substring(0, re.index);
+
+	// Comment line should started with only with spaces
+	return /^\s*$/.test(textBeforeComment);
+}
+
 /**
  * Search for dependencies in the languages is based on indentation.
  */
@@ -33,7 +40,7 @@ function indentBasedLanguage(content: string, language: ILanguage): string[] {
 			comment = reCommentStart.exec(line);
 
 			// Indent === -1 - because Jade & Pug supports nested comments
-			if (indent === -1 && comment) {
+			if (indent === -1 && comment && isCommentLine(line, comment)) {
 				indent = comment.index;
 				continue;
 			}
