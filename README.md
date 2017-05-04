@@ -1,5 +1,7 @@
 # emitty
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mrmlnc/emitty.svg)](https://greenkeeper.io/)
+
 > Determine the inheritance of template and style files.
 
 ## What is it? or what is problem?
