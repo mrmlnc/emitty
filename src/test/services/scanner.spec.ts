@@ -51,7 +51,7 @@ describe('Services/Scanner', () => {
 		const scanner = new Scanner('fixtures', storage, config.getConfig(), options);
 
 		return scanner.scan('fixtures/sass/parser.sass').then(() => {
-			const { dependencies } = storage.get('fixtures/sass/parser.sass');
+			const dependencies = storage.get('fixtures/sass/parser.sass').dependencies;
 
 			assert.equal(dependencies.length, 12);
 			assert.ok(storage.keys().indexOf('fixtures/sass/parser.sass') !== -1);
