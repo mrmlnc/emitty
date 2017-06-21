@@ -37,7 +37,7 @@ export class Stream {
 			stats = null;
 		}
 
-		return through2.obj(function(file, _enc, cb) {
+		return through2.obj(function (file, _enc, cb) {
 			const mainFile = self.makeMainFilePath(self.root, file);
 
 			// Update Storage
@@ -60,7 +60,7 @@ export class Stream {
 	public filter(filepath: string): stream.Transform {
 		const self = this;
 
-		return through2.obj(function(file, _enc, cb) {
+		return through2.obj(function (file, _enc, cb) {
 			const mainFile = self.makeMainFilePath(self.root, file);
 
 			// Protection against bad paths
