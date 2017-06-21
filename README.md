@@ -241,6 +241,7 @@ const emitty = require('emitty').setup('templates', {
 | `comments.start` | `String`   | `null`  | +        | The start of a comment. |
 | `comments.end`   | `String`   | `null`  | +        | The end of a comment. |
 | `[indentBased]`  | `Boolean`  | `false` | -        | The syntax of the language is based on indentation? |
+| `[partials]`  | `Boolean`  | `false` | -        | Add additional partials files (files with `_` prefix, like Sass/SCSS) to dependencies. |
 
 ## How to use with Gulp
 

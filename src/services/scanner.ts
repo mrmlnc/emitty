@@ -108,12 +108,32 @@ export class Scanner {
 			};
 
 			// Calculating the path relative to the root directory
-			item.dependencies = item.dependencies.map((filepath) => {
-				if (!path.extname(filepath)) {
-					filepath = filepath + this.language.extensions[0];
+			const dependencies: string[] = [];
+
+			for (let i = 0; i < item.dependencies.length; i++) {
+				const dependency = item.dependencies[i];
+
+				let filepath = dependency;
+
+				// Add default extension
+				if (!path.extname(dependency)) {
+					filepath += this.language.extensions[0];
 				}
-				return join(entryDir, filepath);
-			});
+
+				// Push partial dependency filepath to dependencies
+				if (this.language.partials && !dependency.startsWith('_')) {
+					const parsedPath = path.parse(dependency);
+					const buildedPath = path.format(Object.assign(parsedPath, <path.ParsedPath>{
+						base: '_' + parsedPath.base
+					}));
+
+					dependencies.push(join(entryDir, buildedPath));
+				}
+
+				dependencies.push(join(entryDir, filepath));
+			}
+
+			item.dependencies = dependencies;
 
 			this.storage.set(entryFilePath, item);
 		});

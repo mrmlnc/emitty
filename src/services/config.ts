@@ -11,6 +11,7 @@ export interface ILanguage {
 	extends?: string;
 	comments?: ILanguageComment;
 	indentBased?: boolean;
+	partials?: boolean;
 }
 
 export const builtInConfigs = {
@@ -75,12 +76,14 @@ export const builtInConfigs = {
 	sass: <ILanguage>{
 		extends: 'less',
 		extensions: ['.sass'],
-		indentBased: true
+		indentBased: true,
+		partials: true
 	},
 
 	scss: <ILanguage>{
 		extends: 'less',
-		extensions: ['.scss']
+		extensions: ['.scss'],
+		partials: true
 	}
 };
 
