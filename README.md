@@ -187,6 +187,7 @@ Passes continue to stream only those files that need to be compiled.
 | `log`             | `Function` | `console.log`                                        | +          | The function that will be called if the file needs to be compiled. |
 | `cleanupInterval` | `Number`   | `null`                                               | -          | Time interval over which the Storage will be cleared of obsolete items. Recommended for projects very big projects. |
 | `makeVinylFile`   | `Boolean`  | `false`                                              | +          | You can use `gulp.src('patterns', { read: false })` to reduce access for filesystem. This option creates a Vinyl file within a Stream. |
+| `basedir`   | `String`   | `null`                                                 | -          | The root directory of all absolute inclusion. |
 | `scanner.depth`   | `Number`   | `30`                                                 | -          | The maximum number of nested directories to scan. |
 | `scanner.exclude` | `String[]` | `['.git', '**/node_modules', '**/bower_components']` | -          | List of Glob-patterns for directories that are excluded when scanning. |
 

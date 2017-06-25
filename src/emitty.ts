@@ -44,6 +44,10 @@ export interface IOptions {
 	 * Creates a Vinyl file for the file which should be compiled.
 	 */
 	makeVinylFile?: boolean;
+	/**
+	 * The root directory of all absolute inclusion.
+	 */
+	basedir?: string;
 }
 
 export interface IEmittyApi {
@@ -96,7 +100,8 @@ export function setup(root: string, language: string | ILanguage, options?: IOpt
 		snapshot: {},
 		cleanupInterval: null,
 		log: () => console.log,
-		vinylFile: false
+		vinylFile: false,
+		basedir: null
 	}, options);
 
 	options.scanner = Object.assign(<IScannerOptions>{

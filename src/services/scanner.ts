@@ -127,16 +127,24 @@ export class Scanner {
 						base: '_' + parsedPath.base
 					}));
 
-					dependencies.push(join(entryDir, buildedPath));
+					dependencies.push(this.makeDependencyPath(entryDir, buildedPath));
 				}
 
-				dependencies.push(join(entryDir, filepath));
+				dependencies.push(this.makeDependencyPath(entryDir, filepath));
 			}
 
 			item.dependencies = dependencies;
 
 			this.storage.set(entryFilePath, item);
 		});
+	}
+
+	private makeDependencyPath(entryDir: string, filepath: string): string {
+		if (filepath.startsWith('/') && this.options.basedir) {
+			return join(this.options.basedir, filepath);
+		}
+
+		return join(entryDir, filepath);
 	}
 
 	private makeEntryFile(filepath: string, ctime: Date): IFile {

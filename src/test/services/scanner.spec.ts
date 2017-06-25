@@ -6,7 +6,9 @@ import { Storage } from '../../services/storage';
 import { Config } from '../../services/config';
 import { Scanner } from '../../services/scanner';
 
-const options = {
+import { IOptions } from '../../emitty';
+
+const options = <IOptions>{
 	scanner: {
 		depth: 30,
 		exclude: ['.git', '**/node_modules', '**/bower_components']
