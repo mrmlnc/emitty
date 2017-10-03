@@ -45,6 +45,7 @@
     "micromatch": "^3.1.0",
     "readdir-enhanced": "^1.5.2",
     "through2": "^2.0.3",
+    "tslib": "^1.7.1",
     "vinyl": "^2.1.0"
   },
   "scripts": {
