@@ -13,3 +13,7 @@ node_modules/
 # Compiled and tempory files
 .tmp/
 out/
+
+# Other files
+package-lock.json
+yarn.lock
