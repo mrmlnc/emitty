@@ -34,7 +34,7 @@ describe('Assert input', () => {
 
 	it('Error by broken language', () => {
 		try {
-			emitty.setup('src', 123);
+			emitty.setup('src', <any>123);
 		} catch (err) {
 			assert.equal(err, 'TypeError: language must be a string or an object');
 		}
