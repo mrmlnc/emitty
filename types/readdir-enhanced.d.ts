@@ -27,8 +27,8 @@ declare module "readdir-enhanced" {
 		function readdirAsyncStat(root: string, options?: IOptions): Promise<IEntry[]>;
 
 		// Callback
-		function async(root: string, cb: (err, files: string[]) => void): void;
-		function async(root: string, options: IOptions, cb: (err, files: string[]) => void): void;
+		function async(root: string, cb: (err: Error, files: string[]) => void): void;
+		function async(root: string, options: IOptions, cb: (err: Error, files: string[]) => void): void;
 
 		// Stream
 		function stream(root: string, options?: IOptions): NodeJS.ReadableStream;

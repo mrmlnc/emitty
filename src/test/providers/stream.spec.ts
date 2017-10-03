@@ -12,7 +12,7 @@ import { normalize } from '../../utils/paths';
 let passedFiles: string[] = [];
 const options = {
 	scanner: {
-		exclude: [],
+		exclude: [] as any[],
 		depth: 30
 	},
 	log: (filepath: string) => {

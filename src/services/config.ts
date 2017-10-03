@@ -14,8 +14,10 @@ export interface ILanguage {
 	partials?: boolean;
 }
 
-export const builtInConfigs = {
-	jade: <ILanguage>{
+export type TBuiltInConfig = Record<string, ILanguage>;
+
+export const builtInConfigs: TBuiltInConfig = {
+	jade: {
 		extensions: ['.jade'],
 		matcher: /(?:^|:)\s*(?:include|extends):?.*\s+(.*)/,
 		comments: {
@@ -25,12 +27,12 @@ export const builtInConfigs = {
 		indentBased: true
 	},
 
-	pug: <ILanguage>{
+	pug: {
 		extends: 'jade',
 		extensions: ['.pug']
 	},
 
-	nunjucks: <ILanguage>{
+	nunjucks: {
 		extensions: ['.njk'],
 		matcher: /{%\s*(?:include|import|extends)\s['"]([^'"]+)['"]\s.*?%}/,
 		comments: {
@@ -39,13 +41,13 @@ export const builtInConfigs = {
 		}
 	},
 
-	sugarml: <ILanguage>{
+	sugarml: {
 		extends: 'pug',
 		extensions: ['.sgr', '.sml'],
 		matcher: /(?:^|:)\s*(?:include|extends)\(?src=['"]([^'"]+)['"].*\)/
 	},
 
-	posthtml: <ILanguage>{
+	posthtml: {
 		extensions: ['.html'],
 		matcher: /<(?:extends|include).*?src=['"]([^'"]+)['"].*?>/,
 		comments: {
@@ -54,7 +56,7 @@ export const builtInConfigs = {
 		}
 	},
 
-	less: <ILanguage>{
+	less: {
 		extensions: ['.less'],
 		matcher: /@import.*?['"]([^'"]+)['"]\s*/,
 		comments: {
@@ -63,7 +65,7 @@ export const builtInConfigs = {
 		}
 	},
 
-	stylus: <ILanguage>{
+	stylus: {
 		extensions: ['.styl'],
 		matcher: /^\s*@(?:import|require).*?['"]([^'"]+)['"]\s*/,
 		comments: {
@@ -73,14 +75,14 @@ export const builtInConfigs = {
 		indentBased: true
 	},
 
-	sass: <ILanguage>{
+	sass: {
 		extends: 'less',
 		extensions: ['.sass'],
 		indentBased: true,
 		partials: true
 	},
 
-	scss: <ILanguage>{
+	scss: {
 		extends: 'less',
 		extensions: ['.scss'],
 		partials: true

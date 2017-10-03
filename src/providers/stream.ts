@@ -17,8 +17,8 @@ import { pathExists, statFile, readFile } from '../utils/fs';
 
 export class Stream {
 
-	private scanner;
-	private resolver;
+	private readonly scanner: Scanner;
+	private readonly resolver: Resolver;
 
 	constructor(private root: string, private storage: Storage, private language: ILanguage, private options: IOptions) {
 		this.scanner = new Scanner(this.root, this.storage, this.language, this.options);

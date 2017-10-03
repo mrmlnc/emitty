@@ -38,11 +38,7 @@ export class Scanner {
 	private scanFile(filepath: string, stats: fs.Stats): Promise<any> {
 		let statPromise: Promise<fs.Stats>;
 		if (stats) {
-			statPromise = pathExists(filepath).then((exists) => {
-				if (exists) {
-					return Promise.resolve(stats);
-				}
-			});
+			statPromise = pathExists(filepath).then((exists) => exists ? Promise.resolve(stats) : null);
 		} else {
 			statPromise = statFile(filepath);
 		}
@@ -57,7 +53,7 @@ export class Scanner {
 	 * Scans directory and saves the dependencies for each file in the Storage.
 	 */
 	private scanDirectory(): Promise<string> {
-		const listOfPromises = [];
+		const listOfPromises: Promise<any>[] = [];
 
 		// Drop previous changed file
 		this.changedFile = null;
@@ -80,7 +76,7 @@ export class Scanner {
 				const entryFilePath = relative(process.cwd(), entry.filepath);
 				const cached = this.storage.get(entryFilePath);
 				if (cached && cached.ctime >= entry.ctime) {
-					listOfPromises.push(cached);
+					listOfPromises.push(Promise.resolve(cached));
 					return;
 				}
 
