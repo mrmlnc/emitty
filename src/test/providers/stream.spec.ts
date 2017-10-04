@@ -33,14 +33,8 @@ describe('Providers/Stream', () => {
 		const stream = new Stream('fixtures', storage, config.getConfig(), options);
 		const s = stream.run('fixtures/pug/c.pug');
 
-		s.on('data', () => {
-			// Because Stream
-		});
-
-		s.on('error', (err) => {
-			done(err);
-		});
-
+		s.on('data', () => { /* Because Stream */ });
+		s.on('error', (err) => done(err));
 		s.on('end', () => {
 			assert.deepEqual(passedFiles, [
 				'fixtures/pug/a.pug',
@@ -61,6 +55,32 @@ describe('Providers/Stream', () => {
 		s.end();
 	});
 
+	it('Should correct work with WIN32 paths', (done) => {
+		const stream = new Stream('fixtures', storage, config.getConfig(), options);
+		const s = stream.run('fixtures\\pug\\c.pug');
+
+		s.on('data', () => { /* Because Stream */ });
+		s.on('error', (err) => done(err));
+		s.on('end', () => {
+			assert.deepEqual(passedFiles, [
+				'fixtures/pug/a.pug',
+				'fixtures/pug/b.pug',
+				'fixtures/pug/c.pug',
+				'fixtures/pug/nested/nested.pug'
+			]);
+
+			done();
+		});
+
+		s.write(new Vinyl({ path: 'pug\\a.pug' }));
+		s.write(new Vinyl({ path: 'pug\\b.pug' }));
+		s.write(new Vinyl({ path: 'pug\\c.pug' }));
+		s.write(new Vinyl({ path: 'pug\\nested\\nested.pug' }));
+		s.write(new Vinyl({ path: 'pug\\parser.pug' }));
+
+		s.end();
+	});
+
 	it('Vinyl file', (done) => {
 		const vOptions = Object.assign({
 			makeVinylFile: true
@@ -73,10 +93,7 @@ describe('Providers/Stream', () => {
 			assert.ok(Buffer.isBuffer(file.contents));
 		});
 
-		s.on('error', (err) => {
-			done(err);
-		});
-
+		s.on('error', (err) => done(err));
 		s.on('end', () => {
 			assert.deepEqual(passedFiles, [
 				'fixtures/pug/a.pug',
@@ -101,14 +118,8 @@ describe('Providers/Stream', () => {
 		const stream = new Stream('fixtures', storage, config.getConfig(), options);
 		const s = stream.filter('fixtures/pug/parser.pug');
 
-		s.on('data', () => {
-			// Because Stream
-		});
-
-		s.on('error', (err) => {
-			done(err);
-		});
-
+		s.on('data', () => { /* Because Stream */ });
+		s.on('error', (err) => done(err));
 		s.on('end', () => {
 			assert.deepEqual(passedFiles, [
 				'fixtures/pug/parser.pug'
