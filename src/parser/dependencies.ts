@@ -53,7 +53,8 @@ function indentBasedLanguage(content: string, language: ILanguage): string[] {
 
 			// If this is not a comment
 			if (indent === -1) {
-				keyword = language.matcher.exec(line);
+				// Trim trailing whitespaces
+				keyword = language.matcher.exec(line.trim());
 			}
 		}
 
