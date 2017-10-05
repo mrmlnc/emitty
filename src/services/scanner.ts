@@ -11,7 +11,7 @@ import { Storage, IStorageItem } from './storage';
 import { parseDependencies } from '../parser/dependencies';
 import { IOptions } from '../emitty';
 import * as pathUtils from '../utils/paths';
-import { pathExists, statFile, readFile } from '../utils/fs';
+import * as fsUtils from '../utils/fs';
 
 export interface IFile {
 	filepath: string;
@@ -38,9 +38,9 @@ export class Scanner {
 	private scanFile(filepath: string, stats: fs.Stats): Promise<any> {
 		let statPromise: Promise<fs.Stats>;
 		if (stats) {
-			statPromise = pathExists(filepath).then((exists) => exists ? Promise.resolve(stats) : null);
+			statPromise = fsUtils.pathExists(filepath).then((exists) => exists ? Promise.resolve(stats) : null);
 		} else {
-			statPromise = statFile(filepath);
+			statPromise = fsUtils.statFile(filepath);
 		}
 
 		return statPromise.then((stat) => {
@@ -97,7 +97,7 @@ export class Scanner {
 		const entryFilePath = pathUtils.relative(process.cwd(), entry.filepath);
 		const entryDir = path.dirname(entryFilePath);
 
-		return readFile(entry.filepath).then((data) => {
+		return fsUtils.readFile(entry.filepath).then((data) => {
 			const item = <IStorageItem>{
 				dependencies: parseDependencies(data, this.language),
 				ctime: entry.ctime

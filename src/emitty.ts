@@ -9,8 +9,8 @@ import { Scanner } from './services/scanner';
 import { Resolver } from './providers/resolver';
 import { Stream } from './providers/stream';
 
-import { normalize, expandGlobPatterns } from './utils/paths';
-import { pathExistsSync } from './utils/fs';
+import * as pathUtils from './utils/paths';
+import * as fsUtils from './utils/fs';
 
 export interface IScannerOptions {
 	/**
@@ -86,7 +86,7 @@ function assertInput(directory: string, language: string | ILanguage): void {
 	if (!language || (type !== 'string' && type !== 'object')) {
 		throw new TypeError('language must be a string or an object');
 	}
-	if (!pathExistsSync(directory)) {
+	if (!fsUtils.pathExistsSync(directory)) {
 		throw new Error('directory must exist');
 	}
 }
@@ -121,10 +121,10 @@ export function setup(root: string, language: string | ILanguage, options?: IOpt
 
 	// Expanding of Glob-patterns that should be excluded during scanning
 	if (options.scanner.exclude) {
-		options.scanner.exclude = expandGlobPatterns(options.scanner.exclude);
+		options.scanner.exclude = pathUtils.expandGlobPatterns(options.scanner.exclude);
 	}
 
-	root = normalize(root);
+	root = pathUtils.normalize(root);
 
 	const config = new Config(language);
 	const scanner = new Scanner(root, storage, config.getConfig(), options);
