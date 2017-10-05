@@ -5,7 +5,7 @@ import * as micromatch from 'micromatch';
 import { StorageService } from '../services/storage';
 import * as pathUtils from '../utils/paths';
 
-export class Resolver {
+export class ResolverProvider {
 
 	constructor(private storage: StorageService) {
 		// :)

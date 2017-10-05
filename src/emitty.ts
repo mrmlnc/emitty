@@ -6,8 +6,8 @@ import * as stream from 'stream';
 import { IStorage, StorageService } from './services/storage';
 import { ILanguage, ConfigService } from './services/config';
 import { ScannerService } from './services/scanner';
-import { Resolver } from './providers/resolver';
-import { Stream } from './providers/stream';
+import { ResolverProvider } from './providers/resolver';
+import { StreamProvider } from './providers/stream';
 
 import * as pathUtils from './utils/paths';
 import * as fsUtils from './utils/fs';
@@ -70,7 +70,7 @@ export interface IEmittyApi {
 	/**
 	 * Returns the methods for determining dependencies.
 	 */
-	resolver: Resolver;
+	resolver: ResolverProvider;
 	/**
 	 * Scans directory or file and updates the Storage.
 	 */
@@ -128,8 +128,8 @@ export function setup(root: string, language: string | ILanguage, options?: IOpt
 
 	const config = new ConfigService(language);
 	const scanner = new ScannerService(root, storage, config.getConfig(), options);
-	const resolver = new Resolver(storage);
-	const stream = new Stream(root, storage, config.getConfig(), options);
+	const resolver = new ResolverProvider(storage);
+	const stream = new StreamProvider(root, storage, config.getConfig(), options);
 
 	return <IEmittyApi>{
 		storage: () => storage.snapshot(),

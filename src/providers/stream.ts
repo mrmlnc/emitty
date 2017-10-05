@@ -10,19 +10,19 @@ import { IOptions } from '../emitty';
 import { StorageService } from '../services/storage';
 import { ILanguage } from '../services/config';
 import { ScannerService } from '../services/scanner';
-import { Resolver } from '../providers/resolver';
+import { ResolverProvider } from '../providers/resolver';
 
 import * as pathUtils from '../utils/paths';
 import * as fsUtils from '../utils/fs';
 
-export class Stream {
+export class StreamProvider {
 
 	private readonly scanner: ScannerService;
-	private readonly resolver: Resolver;
+	private readonly resolver: ResolverProvider;
 
 	constructor(private root: string, private storage: StorageService, private language: ILanguage, private options: IOptions) {
 		this.scanner = new ScannerService(this.root, this.storage, this.language, this.options);
-		this.resolver = new Resolver(this.storage);
+		this.resolver = new ResolverProvider(this.storage);
 	}
 
 	/**

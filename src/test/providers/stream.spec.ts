@@ -5,7 +5,7 @@ import * as Vinyl from 'vinyl';
 
 import { ConfigService } from '../../services/config';
 import { StorageService } from '../../services/storage';
-import { Stream } from '../../providers/stream';
+import { StreamProvider } from '../../providers/stream';
 
 import { normalize } from '../../utils/paths';
 
@@ -30,7 +30,7 @@ describe('Providers/Stream', () => {
 	});
 
 	it('Should work', (done) => {
-		const stream = new Stream('fixtures', storage, config.getConfig(), options);
+		const stream = new StreamProvider('fixtures', storage, config.getConfig(), options);
 		const s = stream.run('fixtures/pug/c.pug');
 
 		s.on('data', () => { /* Because Stream */ });
@@ -56,7 +56,7 @@ describe('Providers/Stream', () => {
 	});
 
 	it('Should correct work with WIN32 paths', (done) => {
-		const stream = new Stream('fixtures', storage, config.getConfig(), options);
+		const stream = new StreamProvider('fixtures', storage, config.getConfig(), options);
 		const s = stream.run('fixtures\\pug\\c.pug');
 
 		s.on('data', () => { /* Because Stream */ });
@@ -86,7 +86,7 @@ describe('Providers/Stream', () => {
 			makeVinylFile: true
 		}, options);
 
-		const stream = new Stream('fixtures', storage, config.getConfig(), vOptions);
+		const stream = new StreamProvider('fixtures', storage, config.getConfig(), vOptions);
 		const s = stream.run('fixtures/pug/c.pug');
 
 		s.on('data', (file: Vinyl) => {
@@ -115,7 +115,7 @@ describe('Providers/Stream', () => {
 	});
 
 	it('Filter method', (done) => {
-		const stream = new Stream('fixtures', storage, config.getConfig(), options);
+		const stream = new StreamProvider('fixtures', storage, config.getConfig(), options);
 		const s = stream.filter('fixtures/pug/parser.pug');
 
 		s.on('data', () => { /* Because Stream */ });
