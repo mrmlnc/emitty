@@ -6,14 +6,14 @@ import * as through2 from 'through2';
 import * as stream from 'stream';
 import * as Vinyl from 'vinyl';
 
-import { IOptions } from '../emitty';
-import { StorageService } from '../services/storage';
-import { ILanguage } from '../services/config';
 import { ScannerService } from '../services/scanner';
+import { StorageService } from '../services/storage';
 import { ResolverProvider } from '../providers/resolver';
-
 import * as pathUtils from '../utils/paths';
 import * as fsUtils from '../utils/fs';
+
+import { IOptions } from '../emitty';
+import { ILanguage } from '../services/config';
 
 export class StreamProvider {
 

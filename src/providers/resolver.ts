@@ -2,8 +2,9 @@
 
 import * as micromatch from 'micromatch';
 
-import { StorageService } from '../services/storage';
 import * as pathUtils from '../utils/paths';
+
+import { StorageService } from '../services/storage';
 
 export class ResolverProvider {
 

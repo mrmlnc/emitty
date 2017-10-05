@@ -6,12 +6,13 @@ import * as fs from 'fs';
 import * as readdir from 'readdir-enhanced';
 import * as micromatch from 'micromatch';
 
-import { ILanguage } from './config';
 import { StorageService, IStorageItem } from './storage';
 import { parseDependencies } from '../parser/dependencies';
-import { IOptions } from '../emitty';
 import * as pathUtils from '../utils/paths';
 import * as fsUtils from '../utils/fs';
+
+import { IOptions } from '../emitty';
+import { ILanguage } from './config';
 
 export interface IFile {
 	filepath: string;
