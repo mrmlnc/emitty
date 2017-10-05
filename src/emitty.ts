@@ -126,18 +126,18 @@ export function setup(root: string, language: string | ILanguage, options?: IOpt
 
 	root = pathUtils.normalize(root);
 
-	const config = new ConfigService(language);
-	const scanner = new ScannerService(root, storage, config.getConfig(), options);
-	const resolver = new ResolverProvider(storage);
-	const stream = new StreamProvider(root, storage, config.getConfig(), options);
+	const configService = new ConfigService(language);
+	const scannerService = new ScannerService(root, storage, configService.getConfig(), options);
+	const resolverProvider = new ResolverProvider(storage);
+	const streamProvider = new StreamProvider(root, storage, configService.getConfig(), options);
 
 	return <IEmittyApi>{
 		storage: () => storage.snapshot(),
 		keys: () => storage.keys(),
 		load: (snapshot: IStorage) => storage.load(snapshot),
-		scan: (filepath?: string, stats?: fs.Stats) => scanner.scan(filepath, stats),
-		resolver,
-		stream: (filepath?: string, stats?: fs.Stats): stream.Transform => stream.run(filepath, stats),
-		filter: (filepath: string): stream.Transform => stream.filter(filepath)
+		scan: (filepath?: string, stats?: fs.Stats) => scannerService.scan(filepath, stats),
+		resolver: resolverProvider,
+		stream: (filepath?: string, stats?: fs.Stats): stream.Transform => streamProvider.run(filepath, stats),
+		filter: (filepath: string): stream.Transform => streamProvider.filter(filepath)
 	};
 }
