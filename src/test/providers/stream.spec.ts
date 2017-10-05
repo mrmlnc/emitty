@@ -34,7 +34,7 @@ describe('Providers/Stream', () => {
 		const s = stream.run('fixtures/pug/c.pug');
 
 		s.on('data', () => { /* Because Stream */ });
-		s.on('error', (err) => done(err));
+		s.on('error', (err: Error) => done(err));
 		s.on('end', () => {
 			assert.deepEqual(passedFiles, [
 				'fixtures/pug/a.pug',
@@ -60,7 +60,7 @@ describe('Providers/Stream', () => {
 		const s = stream.run('fixtures\\pug\\c.pug');
 
 		s.on('data', () => { /* Because Stream */ });
-		s.on('error', (err) => done(err));
+		s.on('error', (err: Error) => done(err));
 		s.on('end', () => {
 			assert.deepEqual(passedFiles, [
 				'fixtures/pug/a.pug',
@@ -93,7 +93,7 @@ describe('Providers/Stream', () => {
 			assert.ok(Buffer.isBuffer(file.contents));
 		});
 
-		s.on('error', (err) => done(err));
+		s.on('error', (err: Error) => done(err));
 		s.on('end', () => {
 			assert.deepEqual(passedFiles, [
 				'fixtures/pug/a.pug',
@@ -119,7 +119,7 @@ describe('Providers/Stream', () => {
 		const s = stream.filter('fixtures/pug/parser.pug');
 
 		s.on('data', () => { /* Because Stream */ });
-		s.on('error', (err) => done(err));
+		s.on('error', (err: Error) => done(err));
 		s.on('end', () => {
 			assert.deepEqual(passedFiles, [
 				'fixtures/pug/parser.pug'
