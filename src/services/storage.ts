@@ -9,7 +9,7 @@ export interface IStorage {
 	[uri: string]: IStorageItem;
 }
 
-export class Storage {
+export class StorageService {
 
 	private store: IStorage = {};
 	private interval: NodeJS.Timer;

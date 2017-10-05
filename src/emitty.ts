@@ -3,9 +3,9 @@
 import * as fs from 'fs';
 import * as stream from 'stream';
 
-import { IStorage, Storage } from './services/storage';
-import { ILanguage, Config } from './services/config';
-import { Scanner } from './services/scanner';
+import { IStorage, StorageService } from './services/storage';
+import { ILanguage, ConfigService } from './services/config';
+import { ScannerService } from './services/scanner';
 import { Resolver } from './providers/resolver';
 import { Stream } from './providers/stream';
 
@@ -94,7 +94,7 @@ function assertInput(directory: string, language: string | ILanguage): void {
 export function setup(root: string, language: string | ILanguage, options?: IOptions) {
 	assertInput(root, language);
 
-	const storage = new Storage();
+	const storage = new StorageService();
 
 	options = Object.assign(<IOptions>{
 		snapshot: {},
@@ -126,8 +126,8 @@ export function setup(root: string, language: string | ILanguage, options?: IOpt
 
 	root = pathUtils.normalize(root);
 
-	const config = new Config(language);
-	const scanner = new Scanner(root, storage, config.getConfig(), options);
+	const config = new ConfigService(language);
+	const scanner = new ScannerService(root, storage, config.getConfig(), options);
 	const resolver = new Resolver(storage);
 	const stream = new Stream(root, storage, config.getConfig(), options);
 

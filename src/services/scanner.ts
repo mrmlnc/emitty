@@ -7,7 +7,7 @@ import * as readdir from 'readdir-enhanced';
 import * as micromatch from 'micromatch';
 
 import { ILanguage } from './config';
-import { Storage, IStorageItem } from './storage';
+import { StorageService, IStorageItem } from './storage';
 import { parseDependencies } from '../parser/dependencies';
 import { IOptions } from '../emitty';
 import * as pathUtils from '../utils/paths';
@@ -18,12 +18,12 @@ export interface IFile {
 	ctime: number;
 }
 
-export class Scanner {
+export class ScannerService {
 
 	private changedFile: string;
 	private excludePatterns: string[] = [];
 
-	constructor(private root: string, private storage: Storage, private language: ILanguage, private options: IOptions) {
+	constructor(private root: string, private storage: StorageService, private language: ILanguage, private options: IOptions) {
 		this.excludePatterns = this.options.scanner.exclude;
 	}
 

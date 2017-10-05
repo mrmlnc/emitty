@@ -2,12 +2,12 @@
 
 import * as micromatch from 'micromatch';
 
-import { Storage } from '../services/storage';
+import { StorageService } from '../services/storage';
 import * as pathUtils from '../utils/paths';
 
 export class Resolver {
 
-	constructor(private storage: Storage) {
+	constructor(private storage: StorageService) {
 		// :)
 	}
 

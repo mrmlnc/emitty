@@ -7,9 +7,9 @@ import * as stream from 'stream';
 import * as Vinyl from 'vinyl';
 
 import { IOptions } from '../emitty';
-import { Storage } from '../services/storage';
+import { StorageService } from '../services/storage';
 import { ILanguage } from '../services/config';
-import { Scanner } from '../services/scanner';
+import { ScannerService } from '../services/scanner';
 import { Resolver } from '../providers/resolver';
 
 import * as pathUtils from '../utils/paths';
@@ -17,11 +17,11 @@ import * as fsUtils from '../utils/fs';
 
 export class Stream {
 
-	private readonly scanner: Scanner;
+	private readonly scanner: ScannerService;
 	private readonly resolver: Resolver;
 
-	constructor(private root: string, private storage: Storage, private language: ILanguage, private options: IOptions) {
-		this.scanner = new Scanner(this.root, this.storage, this.language, this.options);
+	constructor(private root: string, private storage: StorageService, private language: ILanguage, private options: IOptions) {
+		this.scanner = new ScannerService(this.root, this.storage, this.language, this.options);
 		this.resolver = new Resolver(this.storage);
 	}
 

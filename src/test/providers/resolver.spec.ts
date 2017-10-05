@@ -2,10 +2,10 @@
 
 import * as assert from 'assert';
 
-import { Storage } from '../../services/storage';
+import { StorageService } from '../../services/storage';
 import { Resolver } from '../../providers/resolver';
 
-const storage = new Storage();
+const storage = new StorageService();
 const resolver = new Resolver(storage);
 
 describe('Providers/Resolver', () => {

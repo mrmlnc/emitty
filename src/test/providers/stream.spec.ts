@@ -3,8 +3,8 @@
 import * as assert from 'assert';
 import * as Vinyl from 'vinyl';
 
-import { Config } from '../../services/config';
-import { Storage } from '../../services/storage';
+import { ConfigService } from '../../services/config';
+import { StorageService } from '../../services/storage';
 import { Stream } from '../../providers/stream';
 
 import { normalize } from '../../utils/paths';
@@ -20,8 +20,8 @@ const options = {
 	}
 };
 
-const config = new Config('pug');
-const storage = new Storage();
+const config = new ConfigService('pug');
+const storage = new StorageService();
 
 describe('Providers/Stream', () => {
 
