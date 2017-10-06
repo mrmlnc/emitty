@@ -2,9 +2,9 @@
 
 import * as assert from 'assert';
 
-import { Storage } from '../../services/storage';
-import { Config } from '../../services/config';
-import { Scanner } from '../../services/scanner';
+import { StorageService } from '../../services/storage';
+import { ConfigService } from '../../services/config';
+import { ScannerService } from '../../services/scanner';
 
 import { IOptions } from '../../emitty';
 
@@ -17,15 +17,15 @@ const options = <IOptions>{
 
 describe('Services/Scanner', () => {
 
-	let storage: Storage;
+	let storage: StorageService;
 
 	beforeEach(() => {
-		storage = new Storage();
+		storage = new StorageService();
 	});
 
 	it('Scan directory', () => {
-		const config = new Config('pug');
-		const scanner = new Scanner('fixtures', storage, config.getConfig(), options);
+		const config = new ConfigService('pug');
+		const scanner = new ScannerService('fixtures', storage, config.getConfig(), options);
 
 		return scanner.scan().then(() => {
 			assert.equal(storage.keys().length, 5);
@@ -39,8 +39,8 @@ describe('Services/Scanner', () => {
 	});
 
 	it('Scan File', () => {
-		const config = new Config('pug');
-		const scanner = new Scanner('fixtures', storage, config.getConfig(), options);
+		const config = new ConfigService('pug');
+		const scanner = new ScannerService('fixtures', storage, config.getConfig(), options);
 
 		return scanner.scan('fixtures/pug/parser.pug').then(() => {
 			assert.equal(storage.keys().length, 5);
@@ -49,8 +49,8 @@ describe('Services/Scanner', () => {
 	});
 
 	it('Scan File with partials', () => {
-		const config = new Config('sass');
-		const scanner = new Scanner('fixtures', storage, config.getConfig(), options);
+		const config = new ConfigService('sass');
+		const scanner = new ScannerService('fixtures', storage, config.getConfig(), options);
 
 		return scanner.scan('fixtures/sass/parser.sass').then(() => {
 			const dependencies = storage.get('fixtures/sass/parser.sass').dependencies;

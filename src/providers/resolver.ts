@@ -2,12 +2,13 @@
 
 import * as micromatch from 'micromatch';
 
-import { Storage } from '../services/storage';
-import { normalize } from '../utils/paths';
+import * as pathUtils from '../utils/paths';
 
-export class Resolver {
+import { StorageService } from '../services/storage';
 
-	constructor(private storage: Storage) {
+export class ResolverProvider {
+
+	constructor(private storage: StorageService) {
 		// :)
 	}
 
@@ -15,7 +16,7 @@ export class Resolver {
 	 * Returns all files that depends on the specified file.
 	 */
 	public getDependencies(filepath: string): string[] {
-		filepath = normalize(filepath);
+		filepath = pathUtils.normalize(filepath);
 		if (!this.storage.has(filepath)) {
 			return [filepath];
 		}
@@ -29,7 +30,7 @@ export class Resolver {
 	 * Returns True if A depends on B.
 	 */
 	public checkDependency(filepath: string, filepathToCheck: string): boolean {
-		filepathToCheck = normalize(filepathToCheck);
+		filepathToCheck = pathUtils.normalize(filepathToCheck);
 		return this.getDependencies(filepath).indexOf(filepathToCheck) !== -1;
 	}
 

@@ -3,9 +3,9 @@
 import * as assert from 'assert';
 import * as Vinyl from 'vinyl';
 
-import { Config } from '../../services/config';
-import { Storage } from '../../services/storage';
-import { Stream } from '../../providers/stream';
+import { ConfigService } from '../../services/config';
+import { StorageService } from '../../services/storage';
+import { StreamProvider } from '../../providers/stream';
 
 import { normalize } from '../../utils/paths';
 
@@ -20,8 +20,8 @@ const options = {
 	}
 };
 
-const config = new Config('pug');
-const storage = new Storage();
+const config = new ConfigService('pug');
+const storage = new StorageService();
 
 describe('Providers/Stream', () => {
 
@@ -30,17 +30,11 @@ describe('Providers/Stream', () => {
 	});
 
 	it('Should work', (done) => {
-		const stream = new Stream('fixtures', storage, config.getConfig(), options);
+		const stream = new StreamProvider('fixtures', storage, config.getConfig(), options);
 		const s = stream.run('fixtures/pug/c.pug');
 
-		s.on('data', () => {
-			// Because Stream
-		});
-
-		s.on('error', (err) => {
-			done(err);
-		});
-
+		s.on('data', () => { /* Because Stream */ });
+		s.on('error', (err: Error) => done(err));
 		s.on('end', () => {
 			assert.deepEqual(passedFiles, [
 				'fixtures/pug/a.pug',
@@ -61,22 +55,45 @@ describe('Providers/Stream', () => {
 		s.end();
 	});
 
+	it('Should correct work with WIN32 paths', (done) => {
+		const stream = new StreamProvider('fixtures', storage, config.getConfig(), options);
+		const s = stream.run('fixtures\\pug\\c.pug');
+
+		s.on('data', () => { /* Because Stream */ });
+		s.on('error', (err: Error) => done(err));
+		s.on('end', () => {
+			assert.deepEqual(passedFiles, [
+				'fixtures/pug/a.pug',
+				'fixtures/pug/b.pug',
+				'fixtures/pug/c.pug',
+				'fixtures/pug/nested/nested.pug'
+			]);
+
+			done();
+		});
+
+		s.write(new Vinyl({ path: 'pug\\a.pug' }));
+		s.write(new Vinyl({ path: 'pug\\b.pug' }));
+		s.write(new Vinyl({ path: 'pug\\c.pug' }));
+		s.write(new Vinyl({ path: 'pug\\nested\\nested.pug' }));
+		s.write(new Vinyl({ path: 'pug\\parser.pug' }));
+
+		s.end();
+	});
+
 	it('Vinyl file', (done) => {
 		const vOptions = Object.assign({
 			makeVinylFile: true
 		}, options);
 
-		const stream = new Stream('fixtures', storage, config.getConfig(), vOptions);
+		const stream = new StreamProvider('fixtures', storage, config.getConfig(), vOptions);
 		const s = stream.run('fixtures/pug/c.pug');
 
 		s.on('data', (file: Vinyl) => {
 			assert.ok(Buffer.isBuffer(file.contents));
 		});
 
-		s.on('error', (err) => {
-			done(err);
-		});
-
+		s.on('error', (err: Error) => done(err));
 		s.on('end', () => {
 			assert.deepEqual(passedFiles, [
 				'fixtures/pug/a.pug',
@@ -98,17 +115,11 @@ describe('Providers/Stream', () => {
 	});
 
 	it('Filter method', (done) => {
-		const stream = new Stream('fixtures', storage, config.getConfig(), options);
+		const stream = new StreamProvider('fixtures', storage, config.getConfig(), options);
 		const s = stream.filter('fixtures/pug/parser.pug');
 
-		s.on('data', () => {
-			// Because Stream
-		});
-
-		s.on('error', (err) => {
-			done(err);
-		});
-
+		s.on('data', () => { /* Because Stream */ });
+		s.on('error', (err: Error) => done(err));
 		s.on('end', () => {
 			assert.deepEqual(passedFiles, [
 				'fixtures/pug/parser.pug'

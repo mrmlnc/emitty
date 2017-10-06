@@ -3,14 +3,14 @@
 import * as assert from 'assert';
 import * as fs from 'fs';
 
-import { Config } from '../../services/config';
+import { ConfigService } from '../../services/config';
 import { parseDependencies } from '../../parser/dependencies';
 
 describe('Parser/Dependencies', () => {
 
 	it('Jade', () => {
 		const content = fs.readFileSync('./fixtures/jade/parser.jade').toString();
-		const config = new Config('jade');
+		const config = new ConfigService('jade');
 		const dependencies = parseDependencies(content, config.getConfig());
 
 		assert.deepEqual(dependencies, [
@@ -33,7 +33,7 @@ describe('Parser/Dependencies', () => {
 
 	it('Pug', () => {
 		const content = fs.readFileSync('./fixtures/pug/parser.pug').toString();
-		const config = new Config('pug');
+		const config = new ConfigService('pug');
 		const dependencies = parseDependencies(content, config.getConfig());
 
 		assert.deepEqual(dependencies, [
@@ -61,7 +61,7 @@ describe('Parser/Dependencies', () => {
 
 	it('Nunjucks', () => {
 		const content = fs.readFileSync('./fixtures/nunjucks/parser.njk').toString();
-		const config = new Config('nunjucks');
+		const config = new ConfigService('nunjucks');
 		const dependencies = parseDependencies(content, config.getConfig());
 
 		assert.deepEqual(dependencies, [
@@ -78,7 +78,7 @@ describe('Parser/Dependencies', () => {
 
 	it('SugarML', () => {
 		const content = fs.readFileSync('./fixtures/sugarml/parser.sgr').toString();
-		const config = new Config('sugarml');
+		const config = new ConfigService('sugarml');
 		const dependencies = parseDependencies(content, config.getConfig());
 
 		assert.deepEqual(dependencies, [
@@ -101,7 +101,7 @@ describe('Parser/Dependencies', () => {
 
 	it('PostHTML', () => {
 		const content = fs.readFileSync('./fixtures/posthtml/parser.html').toString();
-		const config = new Config('posthtml');
+		const config = new ConfigService('posthtml');
 		const dependencies = parseDependencies(content, config.getConfig());
 
 		assert.deepEqual(dependencies, [
@@ -120,7 +120,7 @@ describe('Parser/Dependencies', () => {
 
 	it('Less', () => {
 		const content = fs.readFileSync('./fixtures/less/parser.less').toString();
-		const config = new Config('less');
+		const config = new ConfigService('less');
 		const dependencies = parseDependencies(content, config.getConfig());
 
 		assert.deepEqual(dependencies, [
@@ -135,7 +135,7 @@ describe('Parser/Dependencies', () => {
 
 	it('Stylus', () => {
 		const content = fs.readFileSync('./fixtures/stylus/parser.styl').toString();
-		const config = new Config('stylus');
+		const config = new ConfigService('stylus');
 		const dependencies = parseDependencies(content, config.getConfig());
 
 		assert.deepEqual(dependencies, [
@@ -150,7 +150,7 @@ describe('Parser/Dependencies', () => {
 
 	it('Sass', () => {
 		const content = fs.readFileSync('./fixtures/sass/parser.sass').toString();
-		const config = new Config('sass');
+		const config = new ConfigService('sass');
 		const dependencies = parseDependencies(content, config.getConfig());
 
 		assert.deepEqual(dependencies, [
@@ -165,7 +165,7 @@ describe('Parser/Dependencies', () => {
 
 	it('SCSS', () => {
 		const content = fs.readFileSync('./fixtures/scss/parser.scss').toString();
-		const config = new Config('scss');
+		const config = new ConfigService('scss');
 		const dependencies = parseDependencies(content, config.getConfig());
 
 		assert.deepEqual(dependencies, [

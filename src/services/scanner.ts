@@ -6,24 +6,25 @@ import * as fs from 'fs';
 import * as readdir from 'readdir-enhanced';
 import * as micromatch from 'micromatch';
 
-import { ILanguage } from './config';
-import { Storage, IStorageItem } from './storage';
+import { StorageService, IStorageItem } from './storage';
 import { parseDependencies } from '../parser/dependencies';
+import * as pathUtils from '../utils/paths';
+import * as fsUtils from '../utils/fs';
+
 import { IOptions } from '../emitty';
-import { relative, join } from '../utils/paths';
-import { pathExists, statFile, readFile } from '../utils/fs';
+import { ILanguage } from './config';
 
 export interface IFile {
 	filepath: string;
 	ctime: number;
 }
 
-export class Scanner {
+export class ScannerService {
 
 	private changedFile: string;
 	private excludePatterns: string[] = [];
 
-	constructor(private root: string, private storage: Storage, private language: ILanguage, private options: IOptions) {
+	constructor(private root: string, private storage: StorageService, private language: ILanguage, private options: IOptions) {
 		this.excludePatterns = this.options.scanner.exclude;
 	}
 
@@ -38,9 +39,9 @@ export class Scanner {
 	private scanFile(filepath: string, stats: fs.Stats): Promise<any> {
 		let statPromise: Promise<fs.Stats>;
 		if (stats) {
-			statPromise = pathExists(filepath).then((exists) => exists ? Promise.resolve(stats) : null);
+			statPromise = fsUtils.pathExists(filepath).then((exists) => exists ? Promise.resolve(stats) : null);
 		} else {
-			statPromise = statFile(filepath);
+			statPromise = fsUtils.statFile(filepath);
 		}
 
 		return statPromise.then((stat) => {
@@ -60,7 +61,7 @@ export class Scanner {
 
 		return new Promise((resolve) => {
 			const stream = readdir.readdirStreamStat(this.root, {
-				basePath: path.resolve(this.root),
+				basePath: pathUtils.relative(process.cwd(), this.root),
 				filter: (stat) => this.scannerFilter(stat),
 				deep: this.options.scanner.depth
 			});
@@ -73,7 +74,7 @@ export class Scanner {
 				const entry = this.makeEntryFile(stat.path, stat.ctime);
 
 				// Return Cache if it exists and not outdated
-				const entryFilePath = relative(process.cwd(), entry.filepath);
+				const entryFilePath = pathUtils.relative(process.cwd(), entry.filepath);
 				const cached = this.storage.get(entryFilePath);
 				if (cached && cached.ctime >= entry.ctime) {
 					listOfPromises.push(Promise.resolve(cached));
@@ -94,10 +95,10 @@ export class Scanner {
 
 	private makeDependenciesForDocument(entry: IFile): Promise<any> {
 		// Remove base path
-		const entryFilePath = relative(process.cwd(), entry.filepath);
+		const entryFilePath = pathUtils.relative(process.cwd(), entry.filepath);
 		const entryDir = path.dirname(entryFilePath);
 
-		return readFile(entry.filepath).then((data) => {
+		return fsUtils.readFile(entry.filepath).then((data) => {
 			const item = <IStorageItem>{
 				dependencies: parseDependencies(data, this.language),
 				ctime: entry.ctime
@@ -137,10 +138,10 @@ export class Scanner {
 
 	private makeDependencyPath(entryDir: string, filepath: string): string {
 		if (filepath.startsWith('/') && this.options.basedir) {
-			return join(this.options.basedir, filepath);
+			return pathUtils.join(this.options.basedir, filepath);
 		}
 
-		return join(entryDir, filepath);
+		return pathUtils.join(entryDir, filepath);
 	}
 
 	private makeEntryFile(filepath: string, ctime: Date): IFile {

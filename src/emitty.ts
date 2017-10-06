@@ -3,14 +3,14 @@
 import * as fs from 'fs';
 import * as stream from 'stream';
 
-import { IStorage, Storage } from './services/storage';
-import { ILanguage, Config } from './services/config';
-import { Scanner } from './services/scanner';
-import { Resolver } from './providers/resolver';
-import { Stream } from './providers/stream';
+import { IStorage, StorageService } from './services/storage';
+import { ILanguage, ConfigService } from './services/config';
+import { ScannerService } from './services/scanner';
+import { ResolverProvider } from './providers/resolver';
+import { StreamProvider } from './providers/stream';
 
-import { normalize, expandGlobPatterns } from './utils/paths';
-import { pathExistsSync } from './utils/fs';
+import * as pathUtils from './utils/paths';
+import * as fsUtils from './utils/fs';
 
 export interface IScannerOptions {
 	/**
@@ -70,7 +70,7 @@ export interface IEmittyApi {
 	/**
 	 * Returns the methods for determining dependencies.
 	 */
-	resolver: Resolver;
+	resolver: ResolverProvider;
 	/**
 	 * Scans directory or file and updates the Storage.
 	 */
@@ -86,7 +86,7 @@ function assertInput(directory: string, language: string | ILanguage): void {
 	if (!language || (type !== 'string' && type !== 'object')) {
 		throw new TypeError('language must be a string or an object');
 	}
-	if (!pathExistsSync(directory)) {
+	if (!fsUtils.pathExistsSync(directory)) {
 		throw new Error('directory must exist');
 	}
 }
@@ -94,7 +94,7 @@ function assertInput(directory: string, language: string | ILanguage): void {
 export function setup(root: string, language: string | ILanguage, options?: IOptions) {
 	assertInput(root, language);
 
-	const storage = new Storage();
+	const storage = new StorageService();
 
 	options = Object.assign(<IOptions>{
 		snapshot: {},
@@ -121,23 +121,23 @@ export function setup(root: string, language: string | ILanguage, options?: IOpt
 
 	// Expanding of Glob-patterns that should be excluded during scanning
 	if (options.scanner.exclude) {
-		options.scanner.exclude = expandGlobPatterns(options.scanner.exclude);
+		options.scanner.exclude = pathUtils.expandGlobPatterns(options.scanner.exclude);
 	}
 
-	root = normalize(root);
+	root = pathUtils.normalize(root);
 
-	const config = new Config(language);
-	const scanner = new Scanner(root, storage, config.getConfig(), options);
-	const resolver = new Resolver(storage);
-	const stream = new Stream(root, storage, config.getConfig(), options);
+	const configService = new ConfigService(language);
+	const scannerService = new ScannerService(root, storage, configService.getConfig(), options);
+	const resolverProvider = new ResolverProvider(storage);
+	const streamProvider = new StreamProvider(root, storage, configService.getConfig(), options);
 
 	return <IEmittyApi>{
 		storage: () => storage.snapshot(),
 		keys: () => storage.keys(),
 		load: (snapshot: IStorage) => storage.load(snapshot),
-		scan: (filepath?: string, stats?: fs.Stats) => scanner.scan(filepath, stats),
-		resolver,
-		stream: (filepath?: string, stats?: fs.Stats): stream.Transform => stream.run(filepath, stats),
-		filter: (filepath: string): stream.Transform => stream.filter(filepath)
+		scan: (filepath?: string, stats?: fs.Stats) => scannerService.scan(filepath, stats),
+		resolver: resolverProvider,
+		stream: (filepath?: string, stats?: fs.Stats): stream.Transform => streamProvider.run(filepath, stats),
+		filter: (filepath: string): stream.Transform => streamProvider.filter(filepath)
 	};
 }

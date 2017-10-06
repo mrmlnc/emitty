@@ -2,9 +2,9 @@
 
 import * as assert from 'assert';
 
-import { Storage } from '../../services/storage';
+import { StorageService } from '../../services/storage';
 
-const storage = new Storage();
+const storage = new StorageService();
 
 describe('Services/Storage', () => {
 

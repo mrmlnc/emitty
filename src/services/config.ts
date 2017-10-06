@@ -89,7 +89,7 @@ export const builtInConfigs: TBuiltInConfig = {
 	}
 };
 
-export class Config {
+export class ConfigService {
 
 	private matcher: RegExp;
 	private extensions: string[];

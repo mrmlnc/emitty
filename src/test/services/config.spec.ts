@@ -2,7 +2,7 @@
 
 import * as assert from 'assert';
 
-import { Config, builtInConfigs } from '../../services/config';
+import { ConfigService, builtInConfigs } from '../../services/config';
 
 describe('Services/Config', () => {
 
@@ -10,7 +10,7 @@ describe('Services/Config', () => {
 
 	it('Error by non-exists language', () => {
 		try {
-			config = new Config('none');
+			config = new ConfigService('none');
 		} catch (err) {
 			assert.equal(err, 'Error: the configuration "none" clound not found');
 		}
@@ -18,7 +18,7 @@ describe('Services/Config', () => {
 
 	it('Error by language without extensions and extends', () => {
 		try {
-			config = new Config({});
+			config = new ConfigService({});
 		} catch (err) {
 			assert.equal(err, 'TypeError: the "extensions" field must be an Array of strings');
 		}
@@ -26,7 +26,7 @@ describe('Services/Config', () => {
 
 	it('Error by language with broken extensions', () => {
 		try {
-			config = new Config({ extensions: <any>1 });
+			config = new ConfigService({ extensions: <any>1 });
 		} catch (err) {
 			assert.equal(err, 'TypeError: the "extensions" field must be an Array of strings');
 		}
@@ -34,7 +34,7 @@ describe('Services/Config', () => {
 
 	it('Error by language with extensions, but without matcher', () => {
 		try {
-			config = new Config({ extensions: ['.pug'] });
+			config = new ConfigService({ extensions: ['.pug'] });
 		} catch (err) {
 			assert.equal(err, 'TypeError: the "matcher" field must be a RegExp');
 		}
@@ -42,7 +42,7 @@ describe('Services/Config', () => {
 
 	it('Error by language with broken matcher', () => {
 		try {
-			config = new Config({ extensions: ['.pug'], matcher: <any>1 });
+			config = new ConfigService({ extensions: ['.pug'], matcher: <any>1 });
 		} catch (err) {
 			assert.equal(err, 'TypeError: the "matcher" field must be a RegExp');
 		}
@@ -50,14 +50,14 @@ describe('Services/Config', () => {
 
 	it('Error by language with non-exists extends', () => {
 		try {
-			config = new Config({ extends: 'nope' });
+			config = new ConfigService({ extends: 'nope' });
 		} catch (err) {
 			assert.equal(err, 'Error: the configuration "nope" clound not found');
 		}
 	});
 
 	it('Built-in language config', () => {
-		config = new Config('jade').getConfig();
+		config = new ConfigService('jade').getConfig();
 		assert.deepEqual(config, builtInConfigs.jade);
 	});
 
@@ -71,7 +71,7 @@ describe('Services/Config', () => {
 			}
 		};
 
-		config = new Config(customConfig).getConfig();
+		config = new ConfigService(customConfig).getConfig();
 		assert.deepEqual(config, customConfig);
 	});
 
@@ -82,7 +82,7 @@ describe('Services/Config', () => {
 			matcher: /hello/
 		};
 
-		config = new Config(customConfig).getConfig();
+		config = new ConfigService(customConfig).getConfig();
 		assert.deepEqual(config, {
 			extensions: ['.hello'],
 			matcher: /hello/,

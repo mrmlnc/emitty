@@ -6,23 +6,23 @@ import * as through2 from 'through2';
 import * as stream from 'stream';
 import * as Vinyl from 'vinyl';
 
+import { ScannerService } from '../services/scanner';
+import { StorageService } from '../services/storage';
+import { ResolverProvider } from '../providers/resolver';
+import * as pathUtils from '../utils/paths';
+import * as fsUtils from '../utils/fs';
+
 import { IOptions } from '../emitty';
-import { Storage } from '../services/storage';
 import { ILanguage } from '../services/config';
-import { Scanner } from '../services/scanner';
-import { Resolver } from '../providers/resolver';
 
-import { normalize } from '../utils/paths';
-import { pathExists, statFile, readFile } from '../utils/fs';
+export class StreamProvider {
 
-export class Stream {
+	private readonly scanner: ScannerService;
+	private readonly resolver: ResolverProvider;
 
-	private readonly scanner: Scanner;
-	private readonly resolver: Resolver;
-
-	constructor(private root: string, private storage: Storage, private language: ILanguage, private options: IOptions) {
-		this.scanner = new Scanner(this.root, this.storage, this.language, this.options);
-		this.resolver = new Resolver(this.storage);
+	constructor(private root: string, private storage: StorageService, private language: ILanguage, private options: IOptions) {
+		this.scanner = new ScannerService(this.root, this.storage, this.language, this.options);
+		this.resolver = new ResolverProvider(this.storage);
 	}
 
 	/**
@@ -36,6 +36,9 @@ export class Stream {
 			filepath = null;
 			stats = null;
 		}
+
+		// Protection against WIN32 paths
+		filepath = pathUtils.normalize(filepath);
 
 		return through2.obj(function (file, _enc, cb) {
 			const mainFile = self.makeMainFilePath(self.root, file);
@@ -77,7 +80,7 @@ export class Stream {
 	 * Determines whether to send the Vinyl file to a Stream.
 	 */
 	private filterFileByDependencies(filepath: string, mainFile: string, streamCtx: any, file: Vinyl, cb: Function) {
-		const changedFile = normalize(filepath);
+		const changedFile = pathUtils.normalize(filepath);
 		if (this.resolver.checkDependency(mainFile, changedFile)) {
 			if (this.options.makeVinylFile) {
 				return this.makeVinylFile(mainFile).then((vFile) => {
@@ -107,29 +110,29 @@ export class Stream {
 	private makeMainFilePath(root: string, file: Vinyl) {
 		let filepath = '';
 		if (file.path) {
-			filepath = path.relative(file.cwd, file.path);
+			filepath = pathUtils.relative(file.cwd, file.path);
 		}
 
 		if (!filepath.startsWith(root)) {
-			filepath = path.join(root, filepath);
+			filepath = pathUtils.join(root, filepath);
 		}
 
-		return normalize(filepath);
+		return pathUtils.normalize(filepath);
 	}
 
 	/**
 	 * Creates Vinyl File for filepath.
 	 */
 	private async makeVinylFile(filepath: string): Promise<any> {
-		const exists = await pathExists(filepath);
+		const exists = await fsUtils.pathExists(filepath);
 		if (!exists) {
 			return null;
 		}
 
-		const stat = await statFile(filepath);
-		const content = await readFile(filepath);
+		const stat = await fsUtils.statFile(filepath);
+		const content = await fsUtils.readFile(filepath);
 
-		const fullpath = path.join(process.cwd(), filepath);
+		const fullpath = pathUtils.join(process.cwd(), filepath);
 
 		return new Vinyl({
 			base: path.dirname(fullpath),
