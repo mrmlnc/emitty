@@ -135,7 +135,7 @@ Returns all files that depends on the specified file.
 
 ```js
 emitty.scan().then(() => {
-  console.log(emitty.getDependencies('a.pug'));
+  console.log(emitty.resolver.getDependencies('a.pug'));
   // ['components/b.pug']
 });
 ```
@@ -146,11 +146,11 @@ Returns True if A depends on B.
 
 ```js
 emitty.scan().then(() => {
-  console.log(emitty.getDependencies('a.pug'));
+  console.log(emitty.resolver.getDependencies('a.pug'));
   // ['components/b.pug']
-  console.log(emitty.checkDependencies('a.pug', 'components/b.pug'));
+  console.log(emitty.resolver.checkDependencies('a.pug', 'components/b.pug'));
   // true
-  console.log(emitty.checkDependencies('a.pug', 'nope.pug'));
+  console.log(emitty.resolver.checkDependencies('a.pug', 'nope.pug'));
   // false
 });
 ```
