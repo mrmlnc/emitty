@@ -38,14 +38,16 @@ export class ScannerService {
 
 	private scanFile(filepath: string, stats: fs.Stats): Promise<any> {
 		let statPromise: Promise<fs.Stats>;
-		
+
 		statPromise = fsUtils.pathExists(filepath).then((exists) => {
-            if (exists) {
-              return stats ? Promise.resolve(stats) : fsUtils.statFile(filepath);
-            }
-			
-            return Promise.reject();
-        });
+			if (exists) {
+				return stats
+					? Promise.resolve(stats)
+					: fsUtils.statFile(filepath);
+			}
+
+			return Promise.reject();
+		});
 
 		return statPromise.then((stat) => {
 			const entry = this.makeEntryFile(filepath, stat.ctime);
