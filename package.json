@@ -1,59 +1,30 @@
 {
+  "private": true,
   "name": "emitty",
-  "version": "1.4.1",
-  "description": "Determine the inheritance of template and style files",
+  "version": "0.0.0",
+  "description": "A monorepo for @emitty packages",
   "license": "MIT",
-  "repository": "mrmlnc/emitty",
-  "author": {
-    "name": "Denis Malinochkin",
-    "url": "canonium.com"
-  },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">= 8"
   },
-  "main": "out/emitty.js",
-  "typings": "out/emitty.d.ts",
-  "keywords": [
-    "inheritance",
-    "incremental",
-    "building",
-    "compile",
-    "compiling",
-    "dependencies",
-    "performance",
-    "tree",
-    "cache",
-    "pug",
-    "jade",
-    "nunjucks",
-    "posthtml"
-  ],
   "devDependencies": {
-    "@types/micromatch": "^2.3.29",
-    "@types/mocha": "^2.2.43",
-    "@types/node": "^8.0.32",
-    "@types/through2": "^2.0.33",
-    "@types/vinyl": "^2.0.1",
-    "mocha": "^3.5.3",
-    "rimraf": "^2.6.2",
-    "tslint": "^5.7.0",
-    "tslint-config-xo": "^1.3.0",
-    "typescript": "^2.5.3",
-    "vinyl": "^2.1.0"
-  },
-  "dependencies": {
-    "micromatch": "^3.1.0",
-    "readdir-enhanced": "^1.5.2",
-    "through2": "^2.0.3",
-    "tslib": "^1.7.1",
-    "vinyl": "^2.1.0"
+    "@times-components/depend": "2.1.15",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^8.10.56",
+    "eslint": "^6.6.0",
+    "eslint-config-mrmlnc": "^1.0.1",
+    "lerna": "^3.18.3",
+    "mocha": "^6.2.2",
+    "rimraf": "^3.0.0",
+    "typescript": "^3.6.4"
   },
   "scripts": {
-    "clean": "rimraf out",
-    "lint": "tslint src/**/*.ts -p .",
-    "compile": "tsc",
-    "test": "mocha out/test/{,**/}*.spec.js -s 0",
-    "build": "npm run clean && npm run lint && npm run compile && npm test",
-    "watch": "npm run clean && npm run lint && npm run compile -- --sourceMap --watch"
+    "clean": "lerna run --parallel clean",
+    "lint": "lerna run --parallel lint",
+    "lint:dependencies": "depend --lerna . --bail --hint --strategy=conservative",
+    "compile": "tsc -b ./packages --verbose",
+    "test": "lerna run --parallel test",
+    "build": "npm run clean && npm run compile && npm run lint && npm run test",
+    "watch": "lerna run --parallel watch"
   }
 }
