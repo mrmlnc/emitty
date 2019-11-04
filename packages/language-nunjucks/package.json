@@ -1,0 +1,29 @@
+{
+  "name": "@emitty/language-nunjucks",
+  "version": "0.0.0",
+  "description": "A Nunjucks language support @emitty",
+  "license": "MIT",
+  "repository": "https://github.com/mrmlnc/emitty/tree/master/packages/language-nunjucks",
+  "keywords": [
+    "emitty",
+    "language",
+    "nunjucks"
+  ],
+  "engines": {
+    "node": ">= 8"
+  },
+  "main": "out/index.js",
+  "typings": "out/index.d.ts",
+  "scripts": {
+    "clean": "rimraf {tsconfig.tsbuildinfo,out}",
+    "lint": "eslint \"src/**/*.ts\" --cache",
+    "compile": "tsc -b .",
+    "compile:watch": "tsc -p . --watch --sourceMap",
+    "test": "mocha \"out/**/*.spec.js\" -s 0",
+    "build": "npm run clean && npm run compile && npm run lint && npm test",
+    "watch": "npm run clean && npm run compile:watch"
+  },
+  "dependencies": {
+    "nunjucks": "^3.2.0"
+  }
+}
