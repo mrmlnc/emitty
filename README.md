@@ -33,6 +33,8 @@ For details on how to configure the tools, see the [`@emitty/core`](./packages/c
 * [Nunjucks](./packages/language-nunjucks)
 * [PostHTML](./packages/language-posthtml)
 * [Pug](./packages/language-pug)
+* [Less](./packages/language-less)
+* [SCSS](./packages/language-scss)
 
 ## Want to report a bug or request a feature?
 

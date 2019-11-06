@@ -11,11 +11,13 @@
     "@times-components/depend": "2.1.15",
     "@types/mocha": "^5.2.7",
     "@types/node": "^8.10.56",
+    "@types/sinon": "^7.5.0",
     "eslint": "^6.6.0",
     "eslint-config-mrmlnc": "^1.0.1",
     "lerna": "^3.18.3",
     "mocha": "^6.2.2",
     "rimraf": "^3.0.0",
+    "sinon": "^7.5.0",
     "typescript": "^3.6.4"
   },
   "scripts": {
