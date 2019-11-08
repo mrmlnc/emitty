@@ -12,6 +12,9 @@
 		},
 		{
 			"path": "./language-pug"
+		},
+		{
+			"path": "./language-less"
 		}
 	]
 }
