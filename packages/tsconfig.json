@@ -1,0 +1,23 @@
+{
+	"files": [],
+	"references": [
+		{
+			"path": "./core"
+		},
+		{
+			"path": "./language-nunjucks"
+		},
+		{
+			"path": "./language-posthtml"
+		},
+		{
+			"path": "./language-pug"
+		},
+		{
+			"path": "./language-less"
+		},
+		{
+			"path": "./language-scss"
+		}
+	]
+}

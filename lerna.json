@@ -1,0 +1,29 @@
+{
+	"version": "independent",
+	"packages": [
+		"packages/*"
+	],
+	"hoist": true,
+	"independent": true,
+	"conventional-commits": true,
+	"npmClientArgs": [
+		"--no-package-lock"
+	],
+	"command": {
+		"add": {
+			"exact": true
+		},
+		"bootstrap": {
+			"ci": false
+		},
+		"publish": {
+			"allowBranch": "master",
+			"exact": true,
+			"message": "build(release): publish"
+		}
+	},
+	"ignoreChanges": [
+		"*.spec.ts",
+		"**/tests/**"
+	]
+}
