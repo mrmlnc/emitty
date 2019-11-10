@@ -1,6 +1,6 @@
 # @emitty/core
 
-> Determine the inheritance of template and style files.
+> A platform for finding dependencies between files and building tools for incremental compilation or build.
 
 ## Table of Contents
 
@@ -176,7 +176,11 @@ Look at the [`gulp.js`](./examples/gulp.js) file for an example.
 You can use the `.language` method with any language, even your own. Just implement the parser for your language.
 
 ```js
-export function myOwnLanguageParser(filepath: string, buffer: Buffer): Promise<{ references: string[] }> {
+type File = {
+    references: string[];
+};
+
+export function myOwnLanguageParser(filepath: string, buffer: Buffer): Promise<File> {
     return Promise.resolve({
         references: ['home.own.language', 'components/header.own.language']
     });

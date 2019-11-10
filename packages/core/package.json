@@ -1,7 +1,7 @@
 {
   "name": "@emitty/core",
   "version": "0.0.0",
-  "description": "Determine the inheritance of template and style files",
+  "description": "A platform for finding dependencies between files and building tools for incremental compilation or build",
   "license": "MIT",
   "repository": "https://github.com/mrmlnc/emitty/tree/master/packages/core",
   "keywords": [
