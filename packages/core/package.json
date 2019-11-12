@@ -1,6 +1,6 @@
 {
   "name": "@emitty/core",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A platform for finding dependencies between files and building tools for incremental compilation or build",
   "license": "MIT",
   "repository": "https://github.com/mrmlnc/emitty/tree/master/packages/core",
