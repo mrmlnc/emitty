@@ -4,16 +4,16 @@
 .gitignore
 .vsts
 tsconfig.json
-tsconfig.tsbuildinfo
 .eslintrc.json
 
 # Log & Cache files
 .eslintcache
+tsconfig.tsbuildinfo
 
 # Build files
 out/benchmark
 out/tests
-out/**/*.js.map
+out/**/*.{d.ts,js}.map
 out/**/*.spec.{d.ts,js}
 
 # Editor directories
