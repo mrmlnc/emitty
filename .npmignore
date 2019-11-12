@@ -4,11 +4,11 @@
 .gitignore
 .vsts
 tsconfig.json
-tsconfig.tsbuildinfo
 .eslintrc.json
 
 # Log & Cache files
 .eslintcache
+tsconfig.tsbuildinfo
 
 # Build files
 out/benchmark
