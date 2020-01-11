@@ -8,7 +8,12 @@ export function parse(_filepath: string, buffer: Buffer): Promise<File> {
 	const references: string[] = [];
 
 	const tree = nunjucks.parser.parse(buffer.toString());
-	const children = tree.children === undefined ? [] : tree.children;
+	const children = [
+		...tree.findAll(nunjucks.nodes.Extends),
+		...tree.findAll(nunjucks.nodes.Include),
+		...tree.findAll(nunjucks.nodes.Import),
+		...tree.findAll(nunjucks.nodes.FromImport)
+	];
 
 	const nodes = new Set([...children]);
 
