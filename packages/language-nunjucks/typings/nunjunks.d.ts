@@ -10,19 +10,16 @@ declare module 'nunjucks' {
 			children: NunjucksNodes[];
 		};
 
-		export type Root = NodeList & {
-		};
+		export type Root = NodeList;
 
 		type TemplateRef = Node & {
 			template?: NunjucksNodes;
 		};
 
-		type Extends = TemplateRef & {
-		};
+		type Extends = TemplateRef;
 
 		type Include = Node & {
 			template: NunjucksNodes;
-			ignoreMissing: boolean;
 		};
 
 		type Import = Node & {
